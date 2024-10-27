@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09FE3DB52CCED66600007927 /* usefulWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE3DB42CCED66600007927 /* usefulWeatherApp.swift */; };
+		09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E0E4A62CCEE795000E48BD /* EarthView.swift */; };
+		09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */; };
 		09FE3DB72CCED66600007927 /* TemperatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE3DB62CCED66600007927 /* TemperatureView.swift */; };
 		09FE3DBB2CCED66800007927 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09FE3DBA2CCED66800007927 /* Assets.xcassets */; };
 		09FE3DBF2CCED66800007927 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09FE3DBE2CCED66800007927 /* Preview Assets.xcassets */; };
@@ -34,8 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09E0E4A62CCEE795000E48BD /* EarthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthView.swift; sourceTree = "<group>"; };
 		09FE3DB12CCED66600007927 /* usefulWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usefulWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		09FE3DB42CCED66600007927 /* usefulWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = usefulWeatherApp.swift; sourceTree = "<group>"; };
+		09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsefulWeatherApp.swift; sourceTree = "<group>"; };
 		09FE3DB62CCED66600007927 /* TemperatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureView.swift; sourceTree = "<group>"; };
 		09FE3DBA2CCED66800007927 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09FE3DBC2CCED66800007927 /* usefulWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = usefulWeather.entitlements; sourceTree = "<group>"; };
@@ -80,6 +82,14 @@
 			path = Temperature;
 			sourceTree = "<group>";
 		};
+		09E0E4A52CCEE77A000E48BD /* Earth */ = {
+			isa = PBXGroup;
+			children = (
+				09E0E4A62CCEE795000E48BD /* EarthView.swift */,
+			);
+			path = Earth;
+			sourceTree = "<group>";
+		};
 		09FE3DA82CCED66500007927 = {
 			isa = PBXGroup;
 			children = (
@@ -103,8 +113,9 @@
 		09FE3DB32CCED66600007927 /* usefulWeather */ = {
 			isa = PBXGroup;
 			children = (
+				09E0E4A52CCEE77A000E48BD /* Earth */,
 				09E0E4A42CCEE68C000E48BD /* Temperature */,
-				09FE3DB42CCED66600007927 /* usefulWeatherApp.swift */,
+				09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */,
 				09FE3DBA2CCED66800007927 /* Assets.xcassets */,
 				09FE3DBC2CCED66800007927 /* usefulWeather.entitlements */,
 				09FE3DBD2CCED66800007927 /* Preview Content */,
@@ -268,7 +279,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				09FE3DB72CCED66600007927 /* TemperatureView.swift in Sources */,
-				09FE3DB52CCED66600007927 /* usefulWeatherApp.swift in Sources */,
+				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
+				09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

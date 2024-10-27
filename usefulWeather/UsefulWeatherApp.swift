@@ -4,7 +4,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct usefulWeatherApp: App {
+struct UsefulWeatherApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
         ])
@@ -22,7 +22,10 @@ struct usefulWeatherApp: App {
             
             TabView {
                 TemperatureView()
-                    .tabItem { Label("aha", systemImage: "pencil") }
+                    .tabItem { Label("Info", systemImage: "thermometer.variable.and.figure.circle") }
+                
+                EarthView()
+                    .tabItem { Label("3D View", systemImage: "globe") }
             }
         }
         .modelContainer(sharedModelContainer)
