@@ -2,7 +2,6 @@
 
 import SwiftUI
 import SceneKit
-import Cocoa
 
 struct EarthView: View {
     let scene = EarthScene()
@@ -12,7 +11,7 @@ struct EarthView: View {
         SceneView(
             scene: scene,
             pointOfView: cameraNode,
-            options: [.allowsCameraControl]
+            options: [.allowsCameraControl, .autoenablesDefaultLighting]
         )
     }
     
@@ -37,6 +36,7 @@ class EarthScene: SCNScene {
         configureCamera()
         addStuff()
         addOmniLight()
+        addPlanetRotation()
     }
     
     private func makeBackground() {
@@ -44,22 +44,21 @@ class EarthScene: SCNScene {
     }
     
     func configureCamera() {
-        self.rootNode.position = SCNVector3(x: 0, y: 0, z: -2)
+        self.rootNode.position = SCNVector3(x: 0, y: 0, z: -4)
     }
     
     func addStuff() {
         let planetMaterial = SCNMaterial()
-        planetMaterial.diffuse.contents = NSImage(named: "earth_diffuse")
-        let specular = NSImage (data: NSDataAsset(name: "earth_specular")!.data)
-        planetMaterial.specular.contents = specular
-        let normal = NSImage(data:  NSDataAsset(name: "earth_normal")!.data)
-        planetMaterial.normal.contents = normal
+        planetMaterial.diffuse.contents = Assets.earthColorMap
+        planetMaterial.specular.contents = Assets.earthLightMap
+        planetMaterial.normal.contents = Assets.earthHeightMap
            
-        let planetGeometry = SCNSphere(radius: 1)
+        let planetGeometry = SCNSphere(radius: 2)
         planetGeometry.materials = [planetMaterial]
 
         let planetNode = SCNNode(geometry: planetGeometry)
         planetNode.position = SCNVector3(0, 0, 0)
+        
         self.rootNode.addChildNode(planetNode)
         self.planetNode = planetNode
     }
@@ -74,4 +73,20 @@ class EarthScene: SCNScene {
         
         self.rootNode.addChildNode(omniLightNode)
     }
+    
+    func addPlanetRotation() {
+        let action = SCNAction.rotate(by: 90, around: .init(x: 0, y: 3.14, z: 0), duration:  360)
+        let repeatAction = SCNAction.repeatForever(action)
+        planetNode?.runAction(repeatAction)
+        
+    }
+}
+
+
+final class Assets {
+    private init(){}
+    
+    static let earthColorMap = NSImage(named: "earth_diffuse")
+    static let earthLightMap = NSImage (data: NSDataAsset(name: "earth_specular")!.data)
+    static let earthHeightMap = NSImage(data:  NSDataAsset(name: "earth_normal")!.data)
 }
