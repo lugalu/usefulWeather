@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E0E4A62CCEE795000E48BD /* EarthView.swift */; };
+		09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */; };
+		09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB0D2CD03FC500344FC8 /* Assets.swift */; };
 		09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */; };
 		09FE3DB72CCED66600007927 /* TemperatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE3DB62CCED66600007927 /* TemperatureView.swift */; };
 		09FE3DBB2CCED66800007927 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09FE3DBA2CCED66800007927 /* Assets.xcassets */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		09E0E4A62CCEE795000E48BD /* EarthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthView.swift; sourceTree = "<group>"; };
+		09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthScene.swift; sourceTree = "<group>"; };
+		09F3BB0D2CD03FC500344FC8 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		09FE3DB12CCED66600007927 /* usefulWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usefulWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsefulWeatherApp.swift; sourceTree = "<group>"; };
 		09FE3DB62CCED66600007927 /* TemperatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureView.swift; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				09E0E4A62CCEE795000E48BD /* EarthView.swift */,
+				09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */,
+				09F3BB0D2CD03FC500344FC8 /* Assets.swift */,
 			);
 			path = Earth;
 			sourceTree = "<group>";
@@ -279,7 +285,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				09FE3DB72CCED66600007927 /* TemperatureView.swift in Sources */,
+				09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */,
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
+				09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */,
 				09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
