@@ -60,11 +60,17 @@ class EarthScene: SCNScene {
         self.planetRotation = repeatAction
     }
     
-    func disablePlanetRotation() {
-        planetNode?.removeAllActions()
-    }
     func addPlanetRotation() {
         guard let planetRotation else { fatalError("Planet rotation not instantiated") }
         planetNode?.runAction(planetRotation)
+    }
+    func disablePlanetRotation() {
+        planetNode?.removeAllActions()
+    }
+
+    
+    func addLight() {
+        guard let globalLight else { return }
+        
     }
 }

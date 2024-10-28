@@ -5,7 +5,7 @@ import SwiftData
 
 struct TemperatureView: View {
     @Environment(\.modelContext) private var modelContext
-
+    @State private var contents = ["socks and sandals", "warm clothes", "the will of a god"]
     var body: some View {
         VStack{
             Text("27C")
@@ -18,8 +18,26 @@ struct TemperatureView: View {
                 Text("Humidity: 22%")
                 Text("Precipitation: 2%")
             }
-            Spacer()
+            
+            Divider()
+            
+            Text("Based on current weather and your provided info:")
+            
+            HStack(alignment: .top){
+                Image(systemName: "figure.stand")
+                    .resizable()
+                    .scaledToFit()
+                
+                VStack{
+                    Text("We recommend the following")
+
+                    ForEach(contents.indices, id: \.self) { idx in
+                        Text("- \(contents[idx])")
+                    }
+                }
+            }
         }
+        .padding(.horizontal)
     }
 
 }

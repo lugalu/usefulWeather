@@ -40,6 +40,7 @@
 		09E0E4A62CCEE795000E48BD /* EarthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthView.swift; sourceTree = "<group>"; };
 		09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthScene.swift; sourceTree = "<group>"; };
 		09F3BB0D2CD03FC500344FC8 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		09FE3DB12CCED66600007927 /* usefulWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usefulWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsefulWeatherApp.swift; sourceTree = "<group>"; };
 		09FE3DB62CCED66600007927 /* TemperatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureView.swift; sourceTree = "<group>"; };
@@ -96,6 +97,14 @@
 			path = Earth;
 			sourceTree = "<group>";
 		};
+		09F3BB0F2CD0494700344FC8 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		09FE3DA82CCED66500007927 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +128,7 @@
 		09FE3DB32CCED66600007927 /* usefulWeather */ = {
 			isa = PBXGroup;
 			children = (
+				09F3BB0F2CD0494700344FC8 /* API */,
 				09E0E4A52CCEE77A000E48BD /* Earth */,
 				09E0E4A42CCEE68C000E48BD /* Temperature */,
 				09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */,
@@ -441,6 +451,7 @@
 		};
 		09FE3DD92CCED66800007927 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -479,6 +490,7 @@
 		};
 		09FE3DDA2CCED66800007927 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
