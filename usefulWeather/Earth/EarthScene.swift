@@ -16,7 +16,7 @@ class EarthScene: SCNScene {
         super.init()
         makeBackground()
         configureCamera()
-        addStuff()
+        configureTemporaryPlanet()
         createLight()
         createPlanetRotation()
     }
@@ -29,7 +29,7 @@ class EarthScene: SCNScene {
         self.rootNode.position = SCNVector3(x: 0, y: 0, z: -6)
     }
     
-    func addStuff() {
+    func configureTemporaryPlanet() {
         let planetMaterial = SCNMaterial()
         planetMaterial.diffuse.contents = Assets.earthColorMap
         planetMaterial.specular.contents = Assets.earthLightMap
@@ -71,6 +71,6 @@ class EarthScene: SCNScene {
     
     func addLight() {
         guard let globalLight else { return }
-        
+        self.rootNode.addChildNode(globalLight)
     }
 }

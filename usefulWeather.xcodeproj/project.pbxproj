@@ -10,6 +10,7 @@
 		09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E0E4A62CCEE795000E48BD /* EarthView.swift */; };
 		09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */; };
 		09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB0D2CD03FC500344FC8 /* Assets.swift */; };
+		09F3BB142CD04E0E00344FC8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB132CD04E0E00344FC8 /* NetworkService.swift */; };
 		09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */; };
 		09FE3DB72CCED66600007927 /* TemperatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE3DB62CCED66600007927 /* TemperatureView.swift */; };
 		09FE3DBB2CCED66800007927 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09FE3DBA2CCED66800007927 /* Assets.xcassets */; };
@@ -41,6 +42,8 @@
 		09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthScene.swift; sourceTree = "<group>"; };
 		09F3BB0D2CD03FC500344FC8 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		09F3BB122CD04B5700344FC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		09F3BB132CD04E0E00344FC8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		09FE3DB12CCED66600007927 /* usefulWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usefulWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsefulWeatherApp.swift; sourceTree = "<group>"; };
 		09FE3DB62CCED66600007927 /* TemperatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureView.swift; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */,
+				09F3BB132CD04E0E00344FC8 /* NetworkService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -128,6 +132,7 @@
 		09FE3DB32CCED66600007927 /* usefulWeather */ = {
 			isa = PBXGroup;
 			children = (
+				09F3BB122CD04B5700344FC8 /* Info.plist */,
 				09F3BB0F2CD0494700344FC8 /* API */,
 				09E0E4A52CCEE77A000E48BD /* Earth */,
 				09E0E4A42CCEE68C000E48BD /* Temperature */,
@@ -298,6 +303,7 @@
 				09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */,
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
 				09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */,
+				09F3BB142CD04E0E00344FC8 /* NetworkService.swift in Sources */,
 				09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,6 +469,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = usefulWeather/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -502,6 +509,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = usefulWeather/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
