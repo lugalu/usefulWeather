@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E0E4A62CCEE795000E48BD /* EarthView.swift */; };
+		09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA78F12CD1A9C800036172 /* NetworkCommons.swift */; };
+		09EA78F42CD1A9E400036172 /* EndpointBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA78F32CD1A9E400036172 /* EndpointBuilder.swift */; };
 		09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */; };
 		09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB0D2CD03FC500344FC8 /* Assets.swift */; };
 		09F3BB142CD04E0E00344FC8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F3BB132CD04E0E00344FC8 /* NetworkService.swift */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		09E0E4A62CCEE795000E48BD /* EarthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthView.swift; sourceTree = "<group>"; };
+		09EA78F12CD1A9C800036172 /* NetworkCommons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommons.swift; sourceTree = "<group>"; };
+		09EA78F32CD1A9E400036172 /* EndpointBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointBuilder.swift; sourceTree = "<group>"; };
 		09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthScene.swift; sourceTree = "<group>"; };
 		09F3BB0D2CD03FC500344FC8 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 			children = (
 				09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */,
 				09F3BB132CD04E0E00344FC8 /* NetworkService.swift */,
+				09EA78F12CD1A9C800036172 /* NetworkCommons.swift */,
+				09EA78F32CD1A9E400036172 /* EndpointBuilder.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -299,9 +305,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09EA78F42CD1A9E400036172 /* EndpointBuilder.swift in Sources */,
 				09FE3DB72CCED66600007927 /* TemperatureView.swift in Sources */,
 				09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */,
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
+				09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */,
 				09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */,
 				09F3BB142CD04E0E00344FC8 /* NetworkService.swift in Sources */,
 				09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */,

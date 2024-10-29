@@ -2,22 +2,21 @@
 
 import Foundation
 
-enum Endpoints {
-    case temperatureMap
-    case precipitationMap
-    case cloudMap
-    case currentLocation(String) //TODO: Check documentation for the needed data!
-}
-
 protocol NetworkInterface {
   
-    func downloadData(from: Endpoints)
+    func downloadData(from: Endpoints) async throws -> Data
 }
 
-extension NetworkInterface {
-
-}
-
-class NetworkService {
+class NetworkService: NetworkInterface {
+    private let API_ENDPOINT = "https://tile.openweathermap.org"
     
+    func downloadData(from endpoint: Endpoints) async throws -> Data {
+        let request = try EndpointBuilder.buildEndpoint(for: endpoint)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        return data
+    }
+   
 }
+
+
+
