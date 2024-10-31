@@ -5,7 +5,7 @@ import SwiftData
 
 @main
 struct UsefulWeatherApp: App {
-    var sharedModelContainer: ModelContainer = {
+    static func makeContainer() -> ModelContainer {
         let schema = Schema([
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -15,9 +15,9 @@ struct UsefulWeatherApp: App {
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
-    }()
+    }
     
-    var locator = ServiceLocator(networkService: NetworkService(), decoderService: DecoderService())
+    var locator = ServiceLocator(networkService: NetworkService(), decoderService: DecoderService(), databaseContainer: Self.makeContainer())
 
     var body: some Scene {
         WindowGroup {
@@ -41,7 +41,6 @@ struct UsefulWeatherApp: App {
             }
             #endif
         }
-        .modelContainer(sharedModelContainer)
         .environment(locator)
     }
 }

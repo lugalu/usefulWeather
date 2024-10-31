@@ -4,7 +4,6 @@ import SwiftUI
 import SwiftData
 
 struct TemperatureView: View {
-    @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var locator: ServiceLocator
     @State private var contents = ["socks and sandals", "warm clothes", "the will of a god"]
     var body: some View {

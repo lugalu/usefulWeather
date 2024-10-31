@@ -90,12 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0996E2302CD444DD00AEA5DF /* ServiceLocator */ = {
+		0996E2302CD444DD00AEA5DF /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				0996E2312CD4459900AEA5DF /* ServiceLocator.swift */,
+				09EA78F52CD1AADB00036172 /* DecoderService.swift */,
+				09F3BB132CD04E0E00344FC8 /* NetworkService.swift */,
 			);
-			path = ServiceLocator;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		09E0E4A42CCEE68C000E48BD /* Temperature */ = {
@@ -120,10 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				09F3BB112CD049FE00344FC8 /* Secrets.xcconfig */,
-				09F3BB132CD04E0E00344FC8 /* NetworkService.swift */,
 				09EA78F12CD1A9C800036172 /* NetworkCommons.swift */,
 				09EA78F32CD1A9E400036172 /* EndpointBuilder.swift */,
-				09EA78F52CD1AADB00036172 /* DecoderService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -151,7 +151,7 @@
 		09FE3DB32CCED66600007927 /* usefulWeather */ = {
 			isa = PBXGroup;
 			children = (
-				0996E2302CD444DD00AEA5DF /* ServiceLocator */,
+				0996E2302CD444DD00AEA5DF /* Services */,
 				09F3BB0F2CD0494700344FC8 /* API */,
 				09E0E4A52CCEE77A000E48BD /* Earth */,
 				09E0E4A42CCEE68C000E48BD /* Temperature */,
