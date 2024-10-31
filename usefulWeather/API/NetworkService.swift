@@ -8,7 +8,6 @@ protocol NetworkInterface {
 }
 
 class NetworkService: NetworkInterface {
-    private let API_ENDPOINT = "https://tile.openweathermap.org"
     
     func downloadData(from endpoint: Endpoints) async throws -> Data {
         let request = try EndpointBuilder.buildEndpoint(for: endpoint)
