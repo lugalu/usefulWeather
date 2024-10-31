@@ -3,15 +3,19 @@
 import SwiftUI
 
 
-struct DecoderService {
-    private init(){}
+protocol DecoderInterface{
+    func decode<T:Decodable>(_ data: Data, class: T) throws -> T
+    func decodeImage(_ data: Data) -> CIImage?
+}
+
+struct DecoderService: DecoderInterface {
     
-    static func decode<T:Decodable>(_ data: Data, class: T) throws -> T {
+    func decode<T:Decodable>(_ data: Data, class: T) throws -> T {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     }
     
-    static func decodeImage(_ data: Data) -> CIImage? {
+    func decodeImage(_ data: Data) -> CIImage? {
         return  CIImage(data: data)
 
     }

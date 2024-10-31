@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2312CD4459900AEA5DF /* ServiceLocator.swift */; };
 		09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E0E4A62CCEE795000E48BD /* EarthView.swift */; };
 		09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA78F12CD1A9C800036172 /* NetworkCommons.swift */; };
 		09EA78F42CD1A9E400036172 /* EndpointBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA78F32CD1A9E400036172 /* EndpointBuilder.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0996E2312CD4459900AEA5DF /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
 		09E0E4A62CCEE795000E48BD /* EarthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthView.swift; sourceTree = "<group>"; };
 		09EA78F12CD1A9C800036172 /* NetworkCommons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommons.swift; sourceTree = "<group>"; };
 		09EA78F32CD1A9E400036172 /* EndpointBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointBuilder.swift; sourceTree = "<group>"; };
@@ -88,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0996E2302CD444DD00AEA5DF /* ServiceLocator */ = {
+			isa = PBXGroup;
+			children = (
+				0996E2312CD4459900AEA5DF /* ServiceLocator.swift */,
+			);
+			path = ServiceLocator;
+			sourceTree = "<group>";
+		};
 		09E0E4A42CCEE68C000E48BD /* Temperature */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,13 +151,14 @@
 		09FE3DB32CCED66600007927 /* usefulWeather */ = {
 			isa = PBXGroup;
 			children = (
-				09F3BB122CD04B5700344FC8 /* Info.plist */,
+				0996E2302CD444DD00AEA5DF /* ServiceLocator */,
 				09F3BB0F2CD0494700344FC8 /* API */,
 				09E0E4A52CCEE77A000E48BD /* Earth */,
 				09E0E4A42CCEE68C000E48BD /* Temperature */,
 				09FE3DB42CCED66600007927 /* UsefulWeatherApp.swift */,
 				09FE3DBA2CCED66800007927 /* Assets.xcassets */,
 				09FE3DBC2CCED66800007927 /* usefulWeather.entitlements */,
+				09F3BB122CD04B5700344FC8 /* Info.plist */,
 				09FE3DBD2CCED66800007927 /* Preview Content */,
 			);
 			path = usefulWeather;
@@ -314,6 +325,7 @@
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
 				09EA78F62CD1AADB00036172 /* DecoderService.swift in Sources */,
 				09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */,
+				0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */,
 				09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */,
 				09F3BB142CD04E0E00344FC8 /* NetworkService.swift in Sources */,
 				09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */,

@@ -3,7 +3,6 @@
 import Foundation
 
 protocol NetworkInterface {
-  
     func downloadData(from: Endpoints) async throws -> Data
 }
 

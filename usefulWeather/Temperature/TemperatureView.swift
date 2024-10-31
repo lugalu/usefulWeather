@@ -5,6 +5,7 @@ import SwiftData
 
 struct TemperatureView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var locator: ServiceLocator
     @State private var contents = ["socks and sandals", "warm clothes", "the will of a god"]
     var body: some View {
         VStack{
@@ -33,6 +34,9 @@ struct TemperatureView: View {
 
                     ForEach(contents.indices, id: \.self) { idx in
                         Text("- \(contents[idx])")
+                    }
+                    .onAppear(){
+                        print(locator.getNetworkService())
                     }
                 }
             }

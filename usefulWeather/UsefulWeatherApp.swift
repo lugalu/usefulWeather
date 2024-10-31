@@ -17,28 +17,31 @@ struct UsefulWeatherApp: App {
         }
     }()
     
-    @State private var preferredColumn =
-        NavigationSplitViewColumn.detail
+    var locator = ServiceLocator(networkService: NetworkService(), decoderService: DecoderService())
 
     var body: some Scene {
         WindowGroup {
-            #if os(iOS)
+            #if os(macOS)
+            NavigationSplitView {
+                TemperatureView()
+                    .navigationSplitViewColumnWidth(min:200, ideal: 300, max: 400)
+
+            }detail: {
+                EarthView()
+            }
+
+            #else
             TabView {
                 TemperatureView()
                     .tabItem { Label("Info", systemImage: "thermometer.variable.and.figure.circle") }
                 
                 EarthView()
                     .tabItem { Label("3D View", systemImage: "globe") }
-            }
-            #else
-            NavigationSplitView(preferredCompactColumn: $preferredColumn) {
-                TemperatureView()
-                    .navigationSplitViewColumnWidth(min:200, ideal: 300, max: 400)
-            }detail: {
-                EarthView()
+                
             }
             #endif
         }
         .modelContainer(sharedModelContainer)
+        .environment(locator)
     }
 }
