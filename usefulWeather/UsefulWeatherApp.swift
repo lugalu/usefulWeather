@@ -5,6 +5,9 @@ import SwiftData
 
 @main
 struct UsefulWeatherApp: App {
+    
+    var locator = ServiceLocator(networkService: NetworkService(), decoderService: DecoderService(), databaseContainer: Self.makeContainer())
+    
     static func makeContainer() -> ModelContainer {
         let schema = Schema([
         ])
@@ -17,7 +20,6 @@ struct UsefulWeatherApp: App {
         }
     }
     
-    var locator = ServiceLocator(networkService: NetworkService(), decoderService: DecoderService(), databaseContainer: Self.makeContainer())
 
     var body: some Scene {
         WindowGroup {
