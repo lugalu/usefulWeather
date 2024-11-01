@@ -10,6 +10,7 @@ struct UsefulWeatherApp: App {
     
     static func makeContainer() -> ModelContainer {
         let schema = Schema([
+            WeatherData.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,16 +26,15 @@ struct UsefulWeatherApp: App {
         WindowGroup {
             #if os(macOS)
             NavigationSplitView {
-                TemperatureView()
+                Weather()
                     .navigationSplitViewColumnWidth(min:200, ideal: 300, max: 400)
-
             }detail: {
                 EarthView()
             }
 
             #else
             TabView {
-                TemperatureView()
+                Weather()
                     .tabItem { Label("Info", systemImage: "thermometer.variable.and.figure.circle") }
                 
                 EarthView()
@@ -44,5 +44,8 @@ struct UsefulWeatherApp: App {
             #endif
         }
         .environment(locator)
+        .environment(WeatherModel(locator: locator))
+
+        
     }
 }

@@ -3,9 +3,11 @@
 import SwiftUI
 import SwiftData
 
-struct TemperatureView: View {
-    @EnvironmentObject private var locator: ServiceLocator
+struct Weather: View {
+    @EnvironmentObject var model: WeatherModel
     @State private var contents = ["socks and sandals", "warm clothes", "the will of a god"]
+    
+    
     var body: some View {
         VStack{
             Text("27C")
@@ -34,17 +36,21 @@ struct TemperatureView: View {
                     ForEach(contents.indices, id: \.self) { idx in
                         Text("- \(contents[idx])")
                     }
-                    .onAppear(){
-                        print(locator.getNetworkService())
-                    }
                 }
             }
         }
         .padding(.horizontal)
+        .task {
+            do {
+                try await model.fetchWeather()
+            } catch {
+                print("oops", error.localizedDescription)
+            }
+        }
     }
 
 }
 
 #Preview {
-    TemperatureView()
+    Weather()
 }
