@@ -2,20 +2,45 @@
 
 import SwiftUI
 import SwiftData
+import CoreLocation
 
 class WeatherModel: ObservableObject, Observable {
-    @Published var data: String = ""
+    @Published var weatherData: WeatherData?
     let networkingService: NetworkInterface
+    let decoderService: DecoderService
     let databaseService: ModelContainer
+    let locationService: GeoLocationInterface
+    var isAuth: Bool {
+        [CLAuthorizationStatus.authorizedWhenInUse, CLAuthorizationStatus.authorizedWhenInUse].contains(locationService.authorizationStatus)
+    }
     
     init(locator: ServiceLocator) {
         self.networkingService = locator.getNetworkService()
+        self.decoderService = locator.getDecoderService()
         self.databaseService = locator.getDatabaseService()
+        self.locationService = locator.getGeoLocationService()
     }
     
     
     func fetchWeather() async throws {
-        //networkingService.downloadData(from: .currentLocation(latitude: <#T##String#>, longitude: <#T##String#>))
+        let (latitude, longitude) = try locationService.getCurrentLocation()
+        let nsLatitude = NSNumber(value: latitude)
+        let nsLongitude = NSNumber(value: longitude)
+        
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        formatter.decimalSeparator = "."
+        
+        guard let latitudeString = formatter.string(from: nsLatitude), let longitudeString = formatter.string(from: nsLongitude) else {
+            fatalError("Handle this!")
+        }
+        
+//        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitudeString, longitude: longitudeString))
+//        let json = try decoderService.decode(data, class: WeatherJSON.self)
+//        let weather = WeatherMapper.map(from: json)
+//        Task{ @MainActor in
+//            self.weatherData = weather
+//        }
     }
     
 }
@@ -27,7 +52,7 @@ fileprivate struct WeatherMapper {
     
     static func map(from json: WeatherJSON) -> WeatherData {
         let cityName = json.name
-        let icon = json.weather.first?.icon ?? "cloud.fill"
+        let icon = iconToSystem(json.weather.first?.icon)
         let type = json.weather.first?.description
         let visibility = json.visibility
         let clouds = json.clouds?.all
@@ -53,7 +78,7 @@ fileprivate struct WeatherMapper {
     }
     
     
-    static func iconToSystem(_ iconName: String?) -> String {
+    private static func iconToSystem(_ iconName: String?) -> String {
         let iconDict: [Int: String] = [
             1: "sun.min.fill",
             2: "cloud.sun.fill",

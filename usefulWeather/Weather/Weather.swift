@@ -12,6 +12,7 @@ struct Weather: View {
         VStack{
             Text("27C")
                 .font(.system(size: 72))
+
             HStack {
                 Text("Max: 30C")
                 Text("Min: 16C")
@@ -47,8 +48,19 @@ struct Weather: View {
                 print("oops", error.localizedDescription)
             }
         }
+        .redacted(reason: auth() ? [] : .placeholder )
+
     }
 
+    
+    func auth() -> Bool {
+        let auth = model.locationService.authorizationStatus
+        #if os(macOS)
+        return auth == .authorized
+        #else
+        return auth  == .authorizedWhenInUse || auth == .authorizedAlways
+        #endif
+    }
 }
 
 #Preview {

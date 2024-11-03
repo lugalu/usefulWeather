@@ -6,7 +6,11 @@ import SwiftData
 @main
 struct UsefulWeatherApp: App {
     
-    var locator = ServiceLocator(networkService: NetworkService(), decoderService: DecoderService(), databaseContainer: Self.makeContainer())
+    var locator = ServiceLocator(
+        networkService: NetworkService(),
+        decoderService: DecoderService(),
+        databaseContainer: Self.makeContainer(),
+        geolocationService: GeoLocationService())
     
     static func makeContainer() -> ModelContainer {
         let schema = Schema([
