@@ -6,41 +6,65 @@ import CoreLocation
 
 class WeatherModel: ObservableObject, Observable {
     @Published var weatherData: WeatherData?
+    @Published var isAuthorized: Bool = false
     let networkingService: NetworkInterface
     let decoderService: DecoderService
     let databaseService: ModelContainer
     let locationService: GeoLocationInterface
-    var isAuth: Bool {
-        [CLAuthorizationStatus.authorizedWhenInUse, CLAuthorizationStatus.authorizedWhenInUse].contains(locationService.authorizationStatus)
-    }
     
     init(locator: ServiceLocator) {
         self.networkingService = locator.getNetworkService()
         self.decoderService = locator.getDecoderService()
         self.databaseService = locator.getDatabaseService()
         self.locationService = locator.getGeoLocationService()
+        locationService.checkAuthorization()
     }
     
     
     func fetchWeather() async throws {
-        let (latitude, longitude) = try locationService.getCurrentLocation()
+        let authorizationStatus = await locationService.authorizationStatus
+        
+        guard checkForAuth(authorizationStatus) else {
+            Task { @MainActor in
+                isAuthorized = false
+            }
+            return
+        }
+        
+        Task { @MainActor in
+            isAuthorized = true
+        }
+        
+        
+        let location = try await locationService.currentLocation
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+
         let nsLatitude = NSNumber(value: latitude)
         let nsLongitude = NSNumber(value: longitude)
-        
+
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
         formatter.decimalSeparator = "."
-        
+
         guard let latitudeString = formatter.string(from: nsLatitude), let longitudeString = formatter.string(from: nsLongitude) else {
             fatalError("Handle this!")
         }
-        
-//        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitudeString, longitude: longitudeString))
-//        let json = try decoderService.decode(data, class: WeatherJSON.self)
-//        let weather = WeatherMapper.map(from: json)
-//        Task{ @MainActor in
-//            self.weatherData = weather
-//        }
+        print("HERE")
+        //        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitudeString, longitude: longitudeString))
+        //        let json = try decoderService.decode(data, class: WeatherJSON.self)
+        //        let weather = WeatherMapper.map(from: json)
+        //        Task{ @MainActor in
+        //            self.weatherData = weather
+        //        }
+    }
+    
+    private func checkForAuth(_ status: CLAuthorizationStatus) -> Bool {
+        #if os(macOS)
+            return status == .authorized || status == .authorizedAlways
+        #else
+            return status == .authorizedAlways || status == .authorizedWhenInUse
+        #endif
     }
     
 }

@@ -48,18 +48,8 @@ struct Weather: View {
                 print("oops", error.localizedDescription)
             }
         }
-        .redacted(reason: auth() ? [] : .placeholder )
+        .redacted(reason: model.isAuthorized ? [] : .placeholder )
 
-    }
-
-    
-    func auth() -> Bool {
-        let auth = model.locationService.authorizationStatus
-        #if os(macOS)
-        return auth == .authorized
-        #else
-        return auth  == .authorizedWhenInUse || auth == .authorizedAlways
-        #endif
     }
 }
 
