@@ -6,7 +6,7 @@ import CoreLocation
 
 class WeatherModel: ObservableObject, Observable {
     @Published var weatherData: WeatherData?
-    @Published var isAuthorized: Bool = false
+    @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     let networkingService: NetworkInterface
     let decoderService: DecoderService
     let databaseService: ModelContainer
@@ -26,13 +26,13 @@ class WeatherModel: ObservableObject, Observable {
         
         guard checkForAuth(authorizationStatus) else {
             Task { @MainActor in
-                isAuthorized = false
+                locationAuthorizationStatus = .denied
             }
             return
         }
         
         Task { @MainActor in
-            isAuthorized = true
+            locationAuthorizationStatus = authorizationStatus
         }
         
         
@@ -50,7 +50,7 @@ class WeatherModel: ObservableObject, Observable {
         guard let latitudeString = formatter.string(from: nsLatitude), let longitudeString = formatter.string(from: nsLongitude) else {
             fatalError("Handle this!")
         }
-        print("HERE")
+
         //        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitudeString, longitude: longitudeString))
         //        let json = try decoderService.decode(data, class: WeatherJSON.self)
         //        let weather = WeatherMapper.map(from: json)
