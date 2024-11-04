@@ -13,11 +13,13 @@ struct Weather: View {
     
     var body: some View {
         VStack{
-            if isAuth()  {
+            if model.checkForAuth()  {
                 weatherView()
                     .redacted(reason: model.weatherData == nil ? .placeholder : [])
-            }else {
+            } else {
                 errorView()
+                    .redacted(reason: model.didAuthHappen() ? [] : .placeholder )
+
             }
         }
         .padding(.horizontal)
@@ -28,17 +30,11 @@ struct Weather: View {
                 print("oops", error.localizedDescription)
             }
         }
-        .redacted(reason: model.locationAuthorizationStatus != .notDetermined ? [] : .placeholder )
+        .redacted(reason: model.didAuthHappen() ? [] : .invalidated )
 
     }
     
-    func isAuth() -> Bool {
-        #if os(macOS)
-        return model.locationAuthorizationStatus == .authorized || model.locationAuthorizationStatus == .authorizedAlways
-        #else
-        return model.locationAuthorizationStatus == .authorizedWhenInUse || model.locationAuthorizationStatus == .authorizedAlways
-        #endif
-    }
+    
     
     @ViewBuilder
     private func errorView() -> some View {

@@ -35,7 +35,18 @@ class WeatherModel: ObservableObject, Observable {
             locationAuthorizationStatus = authorizationStatus
         }
         
+        let (latitude, longitude) = try await getLatitudeAndLongitude()
         
+
+        //        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitudeString, longitude: longitudeString))
+        //        let json = try decoderService.decode(data, class: WeatherJSON.self)
+        //        let weather = WeatherMapper.map(from: json)
+        //        Task{ @MainActor in
+        //            self.weatherData = weather
+        //        }
+    }
+    
+    private func getLatitudeAndLongitude() async throws -> (String,String){
         let location = try await locationService.currentLocation
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
@@ -48,15 +59,9 @@ class WeatherModel: ObservableObject, Observable {
         formatter.decimalSeparator = "."
 
         guard let latitudeString = formatter.string(from: nsLatitude), let longitudeString = formatter.string(from: nsLongitude) else {
-            fatalError("Handle this!")
+            throw NetworkErrors.unknowError
         }
-
-        //        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitudeString, longitude: longitudeString))
-        //        let json = try decoderService.decode(data, class: WeatherJSON.self)
-        //        let weather = WeatherMapper.map(from: json)
-        //        Task{ @MainActor in
-        //            self.weatherData = weather
-        //        }
+        return (latitudeString, longitudeString)
     }
     
     private func checkForAuth(_ status: CLAuthorizationStatus) -> Bool {
@@ -65,6 +70,18 @@ class WeatherModel: ObservableObject, Observable {
         #else
             return status == .authorizedAlways || status == .authorizedWhenInUse
         #endif
+    }
+    
+    func checkForAuth() -> Bool {
+        #if os(macOS)
+        return locationAuthorizationStatus == .authorized || locationAuthorizationStatus == .authorizedAlways
+        #else
+        return locationAuthorizationStatus == .authorizedWhenInUse || locationAuthorizationStatus == .authorizedAlways
+        #endif
+    }
+    
+    func didAuthHappen() -> Bool {
+        return locationAuthorizationStatus != .notDetermined
     }
     
 }

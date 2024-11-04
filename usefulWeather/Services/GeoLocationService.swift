@@ -67,11 +67,14 @@ class GeoLocationService:  NSObject, GeoLocationInterface, Observable, Observabl
         if let location = locations.last {
             locationContinuation?.resume(returning: location)
             locationContinuation = nil
+            manager.stopUpdatingLocation()
         }
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
         locationContinuation?.resume(throwing: error)
         locationContinuation = nil
+        manager.stopUpdatingLocation()
     }
 }
