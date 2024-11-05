@@ -14,7 +14,7 @@ struct UsefulWeatherApp: App {
     
     static func makeContainer() -> ModelContainer {
         let schema = Schema([
-            WeatherData.self
+            //WeatherData.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

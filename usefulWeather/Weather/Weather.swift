@@ -27,6 +27,7 @@ struct Weather: View {
             do {
                 try await model.fetchWeather()
             } catch {
+                //TODO: did error!
                 print("oops", error.localizedDescription)
             }
         }
@@ -57,16 +58,48 @@ struct Weather: View {
     
     @ViewBuilder
     private func weatherView() -> some View {
-        Text("27C")
-            .font(.system(size: 72))
-
+        
+        if let temperature = model.weatherData?.temperature.real {
+            Text(self.getFormattedTemperature(temperature))
+                .font(.system(size: 72))
+        }
+        
         HStack {
-            Text("Max: 30C")
-            Text("Min: 16C")
+            if let minTemperature = model.weatherData?.temperature.min {
+                Text("Min: " + self.getFormattedTemperature(minTemperature))
+            }
+            
+            if let maxTemperature = model.weatherData?.temperature.max {
+                Text("Max: " + self.getFormattedTemperature(maxTemperature))
+            }
         }
         HStack {
-            Text("Humidity: 22%")
-            Text("Precipitation: 2%")
+            
+            if let feelsLike = model.weatherData?.temperature.feelsLike {
+                Text("FeelsLike: " + self.getFormattedTemperature(feelsLike))
+            }
+            
+            if let pressure = model.weatherData?.temperature.pressure,
+            let string = self.getFormattedPressure(pressure) {
+                Text("Pressure: " + string )
+            }
+        }
+        
+        HStack {
+            if let humidity = model.weatherData?.temperature.humidity,
+                let string = self.getFormattedPercent(humidity) {
+                Text("Humidity: " + string)
+            }
+            
+            if let rain = model.weatherData?.rainAmount,
+                let string = self.getFormattedMilimeters(rain) {
+                Text("Precipitation: " + string)
+            }
+            
+            if let snow = model.weatherData?.snowAmount,
+                let string = self.getFormattedMilimeters(snow){
+                Text("Snow: " + string)
+            }
         }
         
         Divider()
@@ -88,6 +121,37 @@ struct Weather: View {
         }
     }
     
+    func getFormattedTemperature(_ temperature: Double) -> String {
+        let formatter = MeasurementFormatter()
+        formatter.numberFormatter.maximumFractionDigits = 0
+        let temperatureUnit = Measurement<UnitTemperature>(value: temperature, unit: .kelvin)
+        return formatter.string(from: temperatureUnit)
+    }
+    
+    func getFormattedPercent(_ integer: Int) -> String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.multiplier = 1
+        formatter.maximumFractionDigits = 2
+        let nsNumber = NSNumber(value: integer)
+        return formatter.string(from: nsNumber)
+    }
+    
+    func getFormattedPressure(_ pressure: Int) -> String? {
+        let formatter = MeasurementFormatter()
+        formatter.unitStyle = .short
+        let pressure =  Measurement<UnitPressure>(value: Double(pressure), unit: .hectopascals)
+        return formatter.string(from: pressure)
+    }
+    
+    func getFormattedMilimeters(_ number: Double) -> String? {
+        let formatter = MeasurementFormatter()
+        formatter.numberFormatter.maximumFractionDigits = 2
+
+        let formattedMilimeters =  Measurement<UnitLength>(value: number, unit: .millimeters)
+        return formatter.string(from: formattedMilimeters)
+
+    }
 }
 
 #Preview {
