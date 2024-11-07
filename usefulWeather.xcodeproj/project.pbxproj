@@ -10,6 +10,7 @@
 		0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2312CD4459900AEA5DF /* ServiceLocator.swift */; };
 		0996E2362CD5778F00AEA5DF /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2352CD5778F00AEA5DF /* WeatherModel.swift */; };
 		0996E2382CD5802F00AEA5DF /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2372CD5802F00AEA5DF /* WeatherJSON.swift */; };
+		09AD4CEA2CDD7AC300D3BC2F /* WeatherInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD4CE92CDD7AC300D3BC2F /* WeatherInformationView.swift */; };
 		09D211A32CD823F4009C9840 /* GeoLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D211A22CD823F4009C9840 /* GeoLocationService.swift */; };
 		09E0E4A72CCEE795000E48BD /* EarthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E0E4A62CCEE795000E48BD /* EarthView.swift */; };
 		09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EA78F12CD1A9C800036172 /* NetworkCommons.swift */; };
@@ -49,6 +50,7 @@
 		0996E2312CD4459900AEA5DF /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
 		0996E2352CD5778F00AEA5DF /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		0996E2372CD5802F00AEA5DF /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
+		09AD4CE92CDD7AC300D3BC2F /* WeatherInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationView.swift; sourceTree = "<group>"; };
 		09D211A22CD823F4009C9840 /* GeoLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationService.swift; sourceTree = "<group>"; };
 		09E0E4A62CCEE795000E48BD /* EarthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthView.swift; sourceTree = "<group>"; };
 		09EA78F12CD1A9C800036172 /* NetworkCommons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCommons.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				0996E2352CD5778F00AEA5DF /* WeatherModel.swift */,
 				0996E2372CD5802F00AEA5DF /* WeatherJSON.swift */,
 				09EE70182CDAC66E00943388 /* WeatherData.swift */,
+				09AD4CE92CDD7AC300D3BC2F /* WeatherInformationView.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */,
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
 				09EA78F62CD1AADB00036172 /* DecoderService.swift in Sources */,
+				09AD4CEA2CDD7AC300D3BC2F /* WeatherInformationView.swift in Sources */,
 				09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */,
 				0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */,
 				09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */,

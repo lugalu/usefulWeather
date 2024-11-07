@@ -39,9 +39,9 @@ class WeatherModel: ObservableObject, Observable {
         let testData = exampleJSON.data(using: .ascii)!
         let json = try decoderService.decode(testData, class: WeatherJSON.self)
         let weather = WeatherMapper.map(from: json)
-        //        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitudeString, longitude: longitudeString))
-        //        let json = try decoderService.decode(data, class: WeatherJSON.self)
-        //        let weather = WeatherMapper.map(from: json)
+//                let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitude, longitude: longitude))
+//                let json = try decoderService.decode(data, class: WeatherJSON.self)
+//                let weather = WeatherMapper.map(from: json)
         Task{ @MainActor in
             self.weatherData = weather
         }
