@@ -6,6 +6,7 @@ import CoreLocation
 
 class WeatherModel: ObservableObject, Observable {
     @Published var weatherData: WeatherData?
+    @Published var recommendedClothing: [String] = []
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     let networkingService: NetworkInterface
     let decoderService: DecoderService
@@ -44,10 +45,11 @@ class WeatherModel: ObservableObject, Observable {
 //                let weather = WeatherMapper.map(from: json)
         Task{ @MainActor in
             self.weatherData = weather
+            self.calculateClothing()
         }
     }
     
-    private func getLatitudeAndLongitude() async throws -> (String,String){
+    private func getLatitudeAndLongitude() async throws -> (String,String) {
         let location = try await locationService.currentLocation
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
@@ -83,6 +85,69 @@ class WeatherModel: ObservableObject, Observable {
     
     func didAuthHappen() -> Bool {
         return locationAuthorizationStatus != .notDetermined
+    }
+    
+
+    
+    func calculateClothing() {
+        guard let weatherData, let feelslike = weatherData.temperature.feelsLike else { return }
+//        let categories: [[String]] = [
+//            ["Light or protective clothes are a must."," Sunscreen is mandatory for light-skinned folks."," Dresses, t-shirts, shirts, shorts, etc."], //1 and 2?
+//            ["Light clothes are recommended."," Sunscreen is highly recommendedfor light-skinned folks."," Dresses, t-shirts, shirts, shorts, etc."], //3 to 4
+//            ["Medium clothing are recommended.", "If you are a person who feels more cold than most it's a good idea to carry a jacket", "Pants, t-shirts, blazers, jackets, etc."], // 5 and 6
+//            [""]
+//        ]
+        
+        var categoryIdx = getCategory(feelslike)
+        if shouldIncreaseIdx(categoryIdx, humidity: weatherData.temperature.humidity) {
+            categoryIdx += 1
+        }
+        
+        //TODO: figure out what to display!
+        
+        let upperBody = ["shirt", "t-shirt", "t-shirt with blazer", "jackets", "sweater", "noodles"] [categoryIdx % 6]
+        let print = ["floral","vertical", "horizontal",  "drawning", "plaid", "plain"] [categoryIdx % 6]
+        let lowerBody = ["skirt", "shorts","jeans", "leggings", "insulated pants"] [categoryIdx % 5]
+        let material = ["chiffon", "fiber", "cotton", "denim", "woolen", "leather"] [categoryIdx % 6]
+
+    }
+    
+    func clamp<T: Numeric & Comparable>( _ minV: T, _ value: T, _ maxV: T) -> T {
+        return min(maxV, max(minV, value))
+    }
+    
+    private func getCategory(_ feelslike: Double) -> Int {
+        return switch feelslike {
+        case (33...) :
+            1
+        case (28...) :
+            2
+        case (25...) :
+            3
+        case (23...) :
+            4
+        case (21...) :
+            5
+        case (18...) :
+            6
+        case (15...) :
+            7
+        case (13...) :
+            8
+        case (9...) :
+            9
+        case (6...) :
+            10
+        case (0...) :
+            10
+        default:
+            11
+        }
+    }
+    
+    private func shouldIncreaseIdx(_ category: Int, humidity: Int?) -> Bool {
+        guard let humidity else { return false }
+        return (category <= 2 && humidity >= 60) || (category > 2 && humidity >= 80)
     }
     
 }

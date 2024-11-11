@@ -3,10 +3,6 @@
 import SwiftUI
 import SwiftData
 
-#if os(iOS)
-import UIKit
-#endif
-
 struct Weather: View {
     @EnvironmentObject var model: WeatherModel
     @State private var contents = ["socks and sandals", "warm clothes", "the will of a god"]
@@ -18,7 +14,6 @@ struct Weather: View {
                     .redacted(reason: model.weatherData == nil ? .placeholder : [])
                 clothingInfo()
                     .redacted(reason: model.weatherData == nil ? .placeholder : [])
-
                 
                 
             } else {
