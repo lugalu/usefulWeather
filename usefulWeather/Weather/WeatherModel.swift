@@ -90,64 +90,30 @@ class WeatherModel: ObservableObject, Observable {
 
     
     func calculateClothing() {
-        guard let weatherData, let feelslike = weatherData.temperature.feelsLike else { return }
-//        let categories: [[String]] = [
-//            ["Light or protective clothes are a must."," Sunscreen is mandatory for light-skinned folks."," Dresses, t-shirts, shirts, shorts, etc."], //1 and 2?
-//            ["Light clothes are recommended."," Sunscreen is highly recommendedfor light-skinned folks."," Dresses, t-shirts, shirts, shorts, etc."], //3 to 4
-//            ["Medium clothing are recommended.", "If you are a person who feels more cold than most it's a good idea to carry a jacket", "Pants, t-shirts, blazers, jackets, etc."], // 5 and 6
-//            [""]
-//        ]
+        guard let weatherData,
+              let airTemperature = weatherData.temperature.real,
+              let airVelocity = weatherData.wind.speed
+        else { return }
+        //TODO: tomorrow, make the HealthService, then bring it here
+        // TODO: Change Air temperature from K to C and Velocity from m/s to cm/s
+        let skinTemperature = 37.0 // use user bodyTemperature else the average
+        let bodySurfaceArea = sqrt(1.76 * 77 / 3600) //BSA = the square root of [height (in centimeters) x weight (in kilograms) / 3600]. need to get these infos
+        let metabolicRate = 65.0 //check healthKit for this, else use a average value (50 + 80)/2 where 50 is base average and 80 max average
+        let evaporationLoss = 0.05 // we assume no evaporation loss
+        let weight = 60.0 //weight of the person in kg
         
-        var categoryIdx = getCategory(feelslike)
-        if shouldIncreaseIdx(categoryIdx, humidity: weatherData.temperature.humidity) {
-            categoryIdx += 1
-        }
         
-        //TODO: figure out what to display!
+        //the formula goes as follows
+        //first we calculate the InsulationOfAir
+        let insulationOfAir = 1 / (0.61 * pow((airTemperature / 298),3) + 0.91 * sqrt(airVelocity) * 298 / airTemperature)
         
-        let upperBody = ["shirt", "t-shirt", "t-shirt with blazer", "jackets", "sweater", "noodles"] [categoryIdx % 6]
-        let print = ["floral","vertical", "horizontal",  "drawning", "plaid", "plain"] [categoryIdx % 6]
-        let lowerBody = ["skirt", "shorts","jeans", "leggings", "insulated pants"] [categoryIdx % 5]
-        let material = ["chiffon", "fiber", "cotton", "denim", "woolen", "leather"] [categoryIdx % 6]
-
-    }
-    
-    func clamp<T: Numeric & Comparable>( _ minV: T, _ value: T, _ maxV: T) -> T {
-        return min(maxV, max(minV, value))
-    }
-    
-    private func getCategory(_ feelslike: Double) -> Int {
-        return switch feelslike {
-        case (33...) :
-            1
-        case (28...) :
-            2
-        case (25...) :
-            3
-        case (23...) :
-            4
-        case (21...) :
-            5
-        case (18...) :
-            6
-        case (15...) :
-            7
-        case (13...) :
-            8
-        case (9...) :
-            9
-        case (6...) :
-            10
-        case (0...) :
-            10
-        default:
-            11
-        }
-    }
-    
-    private func shouldIncreaseIdx(_ category: Int, humidity: Int?) -> Bool {
-        guard let humidity else { return false }
-        return (category <= 2 && humidity >= 60) || (category > 2 && humidity >= 80)
+        //then we calculate the base insulationOfClothes
+        var baseInsulation = 5.55 * (skinTemperature - airTemperature) * bodySurfaceArea
+        let baseInsulationDenominator = metabolicRate - (0.58 * evaporationLoss) + (0.83 * weight)
+        baseInsulation /= baseInsulationDenominator
+        
+        //Finally this is the result, we can use this to find good clothes!
+        let result = baseInsulation - insulationOfAir
     }
     
 }

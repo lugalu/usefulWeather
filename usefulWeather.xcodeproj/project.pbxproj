@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		095409DE2CE2C6B900CA72C8 /* HealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095409DD2CE2C6B900CA72C8 /* HealthService.swift */; };
 		0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2312CD4459900AEA5DF /* ServiceLocator.swift */; };
 		0996E2362CD5778F00AEA5DF /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2352CD5778F00AEA5DF /* WeatherModel.swift */; };
 		0996E2382CD5802F00AEA5DF /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2372CD5802F00AEA5DF /* WeatherJSON.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		095409DD2CE2C6B900CA72C8 /* HealthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthService.swift; sourceTree = "<group>"; };
 		0996E2312CD4459900AEA5DF /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
 		0996E2352CD5778F00AEA5DF /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		0996E2372CD5802F00AEA5DF /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				09EA78F52CD1AADB00036172 /* DecoderService.swift */,
 				09F3BB132CD04E0E00344FC8 /* NetworkService.swift */,
 				09D211A22CD823F4009C9840 /* GeoLocationService.swift */,
+				095409DD2CE2C6B900CA72C8 /* HealthService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				09EE70192CDAC66E00943388 /* WeatherData.swift in Sources */,
 				09D211A32CD823F4009C9840 /* GeoLocationService.swift in Sources */,
 				09F3BB0C2CD03FA000344FC8 /* EarthScene.swift in Sources */,
+				095409DE2CE2C6B900CA72C8 /* HealthService.swift in Sources */,
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
 				09EA78F62CD1AADB00036172 /* DecoderService.swift in Sources */,
 				09AD4CEA2CDD7AC300D3BC2F /* WeatherInformationView.swift in Sources */,
@@ -514,6 +518,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usefulWeather/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We use your health data to personalize the clothing recomendation to you body";
 				INFOPLIST_KEY_NSLocationUsageDescription = "We use your location to retrieve the weather data";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to retrieve the weather data";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -556,6 +561,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usefulWeather/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We use your health data to personalize the clothing recomendation to you body";
 				INFOPLIST_KEY_NSLocationUsageDescription = "We use your location to retrieve the weather data";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to retrieve the weather data";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
