@@ -9,15 +9,19 @@ class ServiceLocator: ObservableObject, Observable {
     private let decoderService: DecoderService
     private let databaseService: ModelContainer
     private let geolocationService: GeoLocationInterface
+    private let healthService: HealthInterface?
     
     init(networkService: NetworkInterface,
          decoderService: DecoderService,
          databaseContainer: ModelContainer,
-         geolocationService: GeoLocationInterface ) {
+         geolocationService: GeoLocationInterface,
+         healthService: HealthInterface?
+    ) {
         self.networkService = networkService
         self.decoderService = decoderService
         self.databaseService = databaseContainer
         self.geolocationService = geolocationService
+        self.healthService = healthService
     }
     
     func getNetworkService() -> NetworkInterface { return networkService }
@@ -27,5 +31,7 @@ class ServiceLocator: ObservableObject, Observable {
     func getDatabaseService() -> ModelContainer { return databaseService }
     
     func getGeoLocationService() -> GeoLocationInterface { return geolocationService }
+    
+    func getHealthService() -> HealthInterface? { return healthService }
     
 }

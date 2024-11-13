@@ -10,7 +10,9 @@ struct UsefulWeatherApp: App {
         networkService: NetworkService(),
         decoderService: DecoderService(),
         databaseContainer: Self.makeContainer(),
-        geolocationService: GeoLocationService())
+        geolocationService: GeoLocationService(),
+        healthService: HealthService()
+    )
     
     static func makeContainer() -> ModelContainer {
         let schema = Schema([

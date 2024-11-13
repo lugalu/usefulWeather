@@ -12,13 +12,16 @@ class WeatherModel: ObservableObject, Observable {
     let decoderService: DecoderService
     let databaseService: ModelContainer
     let locationService: GeoLocationInterface
+    let healthService: HealthInterface?
     
     init(locator: ServiceLocator) {
         self.networkingService = locator.getNetworkService()
         self.decoderService = locator.getDecoderService()
         self.databaseService = locator.getDatabaseService()
         self.locationService = locator.getGeoLocationService()
+        self.healthService = locator.getHealthService()
         locationService.checkAuthorization()
+        healthService?.askAuthorizationIfNeeded()
     }
     
     
@@ -45,8 +48,9 @@ class WeatherModel: ObservableObject, Observable {
 //                let weather = WeatherMapper.map(from: json)
         Task{ @MainActor in
             self.weatherData = weather
-            self.calculateClothing()
+            try await self.calculateClothing()
         }
+        
     }
     
     private func getLatitudeAndLongitude() async throws -> (String,String) {
@@ -89,18 +93,23 @@ class WeatherModel: ObservableObject, Observable {
     
 
     
-    func calculateClothing() {
+    func calculateClothing() async throws{
         guard let weatherData,
-              let airTemperature = weatherData.temperature.real,
-              let airVelocity = weatherData.wind.speed
-        else { return }
-        //TODO: tomorrow, make the HealthService, then bring it here
-        // TODO: Change Air temperature from K to C and Velocity from m/s to cm/s
-        let skinTemperature = 37.0 // use user bodyTemperature else the average
-        let bodySurfaceArea = sqrt(1.76 * 77 / 3600) //BSA = the square root of [height (in centimeters) x weight (in kilograms) / 3600]. need to get these infos
-        let metabolicRate = 65.0 //check healthKit for this, else use a average value (50 + 80)/2 where 50 is base average and 80 max average
-        let evaporationLoss = 0.05 // we assume no evaporation loss
-        let weight = 60.0 //weight of the person in kg
+              var airTemperature = weatherData.temperature.real,
+              var airVelocity = weatherData.wind.speed
+        else {
+            return
+        }
+        airTemperature -= 273.15
+        airTemperature = round(airTemperature)
+        airVelocity *= 100
+
+        let skinTemperature = (try? await healthService?.getBodyTemperature()) ?? 37.0
+        let height = ((try? await healthService?.getHeight()) ?? 1.76) * 100
+        let weight = ((try? await healthService?.getWeight()) ?? 77000) / 1000
+        let bodySurfaceArea = sqrt(height * weight / 3600)
+        let metabolicRate = (try? await healthService?.getMetabolicRate()) ?? 65.0
+        let evaporationLoss = 0.05
         
         
         //the formula goes as follows
@@ -114,6 +123,7 @@ class WeatherModel: ObservableObject, Observable {
         
         //Finally this is the result, we can use this to find good clothes!
         let result = baseInsulation - insulationOfAir
+        print(result)
     }
     
 }

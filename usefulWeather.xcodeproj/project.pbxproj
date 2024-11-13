@@ -518,7 +518,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usefulWeather/Info.plist;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "We use your health data to personalize the clothing recomendation to you body";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We use your health data to personalize the clothing recomendation to you body, if denied or missing we use the average values for most humans";
 				INFOPLIST_KEY_NSLocationUsageDescription = "We use your location to retrieve the weather data";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to retrieve the weather data";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -561,7 +561,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = usefulWeather/Info.plist;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "We use your health data to personalize the clothing recomendation to you body";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We use your health data to personalize the clothing recomendation to you body, if denied or missing we use the average values for most humans";
 				INFOPLIST_KEY_NSLocationUsageDescription = "We use your location to retrieve the weather data";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to retrieve the weather data";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
