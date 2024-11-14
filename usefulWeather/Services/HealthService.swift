@@ -68,6 +68,8 @@ class HealthService: HealthInterface {
         let query = HKSampleQueryDescriptor(predicates: [.quantitySample(type: type)],
                                             sortDescriptors: [SortDescriptor(\.endDate, order: .forward)])
         let result = try await query.result(for: healthStore)
+        
+        guard !result.isEmpty else { return nil }
         return result.reduce(0, { $0 + $1.quantity.doubleValue(for: .kilocalorie())}) / Double(result.count)
     }
     

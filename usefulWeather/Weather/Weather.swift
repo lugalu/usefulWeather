@@ -10,11 +10,16 @@ struct Weather: View {
     var body: some View {
         VStack{
             if model.checkForAuth()  {
-                WeatherInformation(weather: $model.weatherData)
-                    .redacted(reason: model.weatherData == nil ? .placeholder : [])
-                clothingInfo()
-                    .redacted(reason: model.weatherData == nil ? .placeholder : [])
                 
+                if model.weatherData != nil {
+                    WeatherInformation(weather: $model.weatherData)
+                    Divider()
+                    clothingInfo()
+                }else {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .scaleEffect(3, anchor: .center)
+                }
                 
             } else {
                 errorView()
@@ -55,22 +60,20 @@ struct Weather: View {
     
     @ViewBuilder
     private func clothingInfo() -> some View {
-        Divider()
-        
-        Text("Based on current weather and your provided info:")
-        
-        HStack(alignment: .top){
-            Image(systemName: "figure.stand")
-                .resizable()
-                .scaledToFit()
-            
-            VStack{
-                Text("We recommend the following")
 
-                ForEach(contents.indices, id: \.self) { idx in
-                    Text("- \(contents[idx])")
+        if model.weatherData != nil && !model.recommendedClothing.isEmpty {
+            Text("The following clothes are recomendations based on the weather and the information stored on your health.*")
+            
+            VStack(alignment: .leading){
+                ForEach(model.recommendedClothing, id: \.self) { clothe in
+                    Text("- \(clothe)")
                 }
             }
+            
+            Text("*If Health is authorized, otherwise average values based on reasearch.")
+            Text("These are not fashion advice, usem them as guides for what to wear.")
+        } else {
+            Text("Calculating Clothing")
         }
     }
     
