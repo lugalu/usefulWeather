@@ -96,10 +96,5 @@ struct WeatherInformation: View {
 }
 
 
-struct WeatherInformationPreview: PreviewProvider{
-    static let weather = WeatherMapper.map(from: try! DecoderService().decode(exampleJSON.data(using: .ascii)!, class: WeatherJSON.self))
-    static var previews: some View {
-        WeatherInformation(weather: .constant(weather))
-    }
-    
-}
+
+

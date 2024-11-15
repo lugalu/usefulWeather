@@ -24,7 +24,6 @@ class WeatherModel: ObservableObject, Observable {
         healthService?.askAuthorizationIfNeeded()
     }
     
-    
     func fetchWeather() async throws {
         let authorizationStatus = await locationService.authorizationStatus
         
@@ -35,32 +34,27 @@ class WeatherModel: ObservableObject, Observable {
             return
         }
         
-        Task { @MainActor in
-            locationAuthorizationStatus = authorizationStatus
-        }
+        await Task { @MainActor in locationAuthorizationStatus = authorizationStatus }.value
         
-        //TODO: Test
-        //        let testData = exampleJSON.data(using: .ascii)!
-        //        let json = try decoderService.decode(testData, class: WeatherJSON.self)
-        //        let weather = WeatherMapper.map(from: json)
-        
-        let (latitude, longitude) = try await getLatitudeAndLongitude()
-
-        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitude, longitude: longitude))
-        let json = try decoderService.decode(data, class: WeatherJSON.self)
-        let weather = WeatherMapper.map(from: json)
-
-        
+        let weather = try await downloadAndDecode()
         let cloIndex = try await self.calculateClothing(weatherData: weather) ?? 1
         let clothes = getClothing(cloIndex).filter({ !$0.isEmpty })
         
-        Task{ @MainActor in
+        await Task{ @MainActor in
             self.weatherData = weather
             self.recommendedClothing = clothes
-        }
+        }.value
     }
     
-    private func getLatitudeAndLongitude() async throws -> (String,String) {
+    func downloadAndDecode() async throws -> WeatherData {
+        let (latitude, longitude) = try await getLatitudeAndLongitude()
+        let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitude, longitude: longitude))
+        let json = try decoderService.decode(data, class: WeatherJSON.self)
+        let weather = WeatherMapper.map(from: json)
+        return weather
+    }
+    
+    func getLatitudeAndLongitude() async throws -> (String,String) {
         let location = try await locationService.currentLocation
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
@@ -87,11 +81,7 @@ class WeatherModel: ObservableObject, Observable {
     }
     
     func checkForAuth() -> Bool {
-        #if os(macOS)
-        return locationAuthorizationStatus == .authorized || locationAuthorizationStatus == .authorizedAlways
-        #else
-        return locationAuthorizationStatus == .authorizedWhenInUse || locationAuthorizationStatus == .authorizedAlways
-        #endif
+        return checkForAuth(self.locationAuthorizationStatus)
     }
     
     func didAuthHappen() -> Bool {

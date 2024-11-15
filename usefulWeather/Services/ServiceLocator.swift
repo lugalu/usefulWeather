@@ -3,7 +3,7 @@
 import SwiftUI
 import SwiftData
 
-
+//TODO: Make a true Database service, in order to test things out!
 class ServiceLocator: ObservableObject, Observable {
     private let networkService: NetworkInterface
     private let decoderService: DecoderService
