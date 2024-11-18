@@ -32,26 +32,40 @@ struct UsefulWeatherApp: App {
         WindowGroup {
             #if os(macOS)
             NavigationSplitView {
-                Weather()
-                    .navigationSplitViewColumnWidth(min:200, ideal: 300, max: 400)
+                ZStack{
+                    makeBackgroundColor()
+                    Weather()
+                }
+                .navigationSplitViewColumnWidth(min:200, ideal: 300, max: 400)
+
+                
             }detail: {
                 EarthView()
             }
 
             #else
             TabView {
-                Weather()
+                ZStack{
+                    makeBackgroundColor()
+                    Weather()
+                }
                     .tabItem { Label("Info", systemImage: "thermometer.variable.and.figure.circle") }
                 
                 EarthView()
                     .tabItem { Label("3D View", systemImage: "globe") }
+                
                 
             }
             #endif
         }
         .environment(locator)
         .environment(WeatherModel(locator: locator))
-
         
     }
 }
+
+@ViewBuilder
+func makeBackgroundColor() -> some View {
+    Color(red: 0.12, green: 0.12, blue: 0.12).ignoresSafeArea(.all)
+}
+

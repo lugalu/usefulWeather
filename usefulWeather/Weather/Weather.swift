@@ -5,7 +5,6 @@ import SwiftData
 
 struct Weather: View {
     @EnvironmentObject var model: WeatherModel
-    @State private var contents = ["socks and sandals", "warm clothes", "the will of a god"]
     
     var body: some View {
         VStack{
@@ -37,7 +36,6 @@ struct Weather: View {
             }
         }
         .redacted(reason: model.didAuthHappen() ? [] : .invalidated )
-
     }
     
     @ViewBuilder
@@ -77,10 +75,4 @@ struct Weather: View {
         }
     }
     
-}
-
-
-
-#Preview {
-    Weather()
 }
