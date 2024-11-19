@@ -48,7 +48,7 @@ struct WeatherInformation: View {
     
     
     func getFeelsLikeColor(_ feelsLike: Double, _ temperature: Double) -> Color {
-        guard round(feelsLike) != round(temperature) else {
+        guard self.getFormattedTemperature(feelsLike) != self.getFormattedTemperature(temperature) else {
             return weather?.iconColor ?? .gray
         }
         if feelsLike > temperature { return .orange }
@@ -148,7 +148,7 @@ struct WeatherInformation: View {
                                         WeatherData.Temperature(real: 292,
                                                                 min: 287,
                                                                 max: 295,
-                                                                feelsLike: 291,
+                                                                feelsLike: 292.5,
                                                                 pressure: 1015,
                                                                 humidity: 97),
                                     wind: WeatherData.Wind(speed: 10,
