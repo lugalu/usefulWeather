@@ -5,23 +5,26 @@ import SwiftUI
 struct WeatherInformation: View {
     @Binding var weather: WeatherData?
     
+
+    
     var body: some View {
-        Grid(alignment: .center, horizontalSpacing: 16, verticalSpacing: 16) {
-            
+        
+        Grid(horizontalSpacing: 16, verticalSpacing: 16) {
             if let icon = weather?.icon,
                 let temperature = weather?.temperature.real {
                 GridRow {
                     makeDefaultCard(text: self.getFormattedTemperature(temperature),
-                                    systemImage: icon)
+                                    systemImage: icon, imageColor: weather?.iconColor)
                     
                     if let feelsLike = weather?.temperature.feelsLike {
                         makeDefaultCard(text: self.getFormattedTemperature(feelsLike),
                                         systemImage: "thermometer.variable.and.figure",
-                                        imageColor: temperature < feelsLike ? .yellow : .indigo )
+                                        imageColor:
+                                            getFeelsLikeColor(feelsLike,
+                                                              temperature))
                     }
                 }
             }
-            
             
             GridRow{
                 if let minTemperature = weather?.temperature.min {
@@ -38,29 +41,50 @@ struct WeatherInformation: View {
                 }
             }
         }
-        List {
+        
+        makeList()
+            .padding(.top, 8)
+    }
+    
+    
+    func getFeelsLikeColor(_ feelsLike: Double, _ temperature: Double) -> Color {
+        guard round(feelsLike) != round(temperature) else {
+            return weather?.iconColor ?? .gray
+        }
+        if feelsLike > temperature { return .orange }
+        return .cyan
+    }
+    
+    @ViewBuilder
+    func makeList() -> some View {
+        VStack(alignment: .leading) {
             if let pressure = weather?.temperature.pressure,
                let string = self.getFormattedPressure(pressure) {
                 Text("Pressure: " + string)
+                Divider()
+
             }
             
             if let humidity = weather?.temperature.humidity,
-                let string = self.getFormattedPercent(humidity) {
+               let string = self.getFormattedPercent(humidity) {
                 Text("Humidity: " + string)
+                Divider()
+
             }
-            
+
             if let rain = weather?.rainAmount,
-                let string = self.getFormattedMilimeters(rain) {
+               let string = self.getFormattedMilimeters(rain) {
                 Text("Precipitation: " + string)
+                Divider()
             }
             
             if let snow = weather?.snowAmount,
-                let string = self.getFormattedMilimeters(snow){
+               let string = self.getFormattedMilimeters(snow){
                 Text("Snow: " + string)
+                Divider()
             }
         }
-        .listStyle(.plain)
-        .scrollDisabled(true)
+        .padding(.horizontal, 4)
     }
     
     @ViewBuilder
@@ -70,7 +94,7 @@ struct WeatherInformation: View {
                 .foregroundStyle(imageColor ?? .primary)
             Text(text)
         }
-        .frame(width: 120, height: 120)
+        .frame(width: 150, height: 150)
         .font(.system(size: 46))
         .baseCardStyle()
     }
@@ -101,7 +125,7 @@ struct WeatherInformation: View {
     func getFormattedMilimeters(_ number: Double) -> String? {
         let formatter = MeasurementFormatter()
         formatter.numberFormatter.maximumFractionDigits = 2
-
+        formatter.unitOptions = .providedUnit
         let formattedMilimeters =  Measurement<UnitLength>(value: number, unit: .millimeters)
         return formatter.string(from: formattedMilimeters)
 
@@ -110,19 +134,11 @@ struct WeatherInformation: View {
     
 }
 
-fileprivate extension View {
-    func baseCardStyle() -> some View {
-        self
-            .background(.bar, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
-
-            
-    }
-}
-
 #Preview {
     WeatherInformation(weather: .constant(
                         WeatherData(cityName: "aaa",
                                     icon: "cloud",
+                                    iconColor: .gray,
                                     type: "",
                                     visibility: 10,
                                     clouds: 10,
@@ -130,9 +146,9 @@ fileprivate extension View {
                                     snow: 10,
                                     temperature:
                                         WeatherData.Temperature(real: 292,
-                                                                min: 292,
-                                                                max: 292,
-                                                                feelsLike: 293,
+                                                                min: 287,
+                                                                max: 295,
+                                                                feelsLike: 291,
                                                                 pressure: 1015,
                                                                 humidity: 97),
                                     wind: WeatherData.Wind(speed: 10,

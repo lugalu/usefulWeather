@@ -62,10 +62,12 @@ struct UsefulWeatherApp: App {
         .environment(WeatherModel(locator: locator))
         
     }
+    
+    @ViewBuilder
+    func makeBackgroundColor() -> some View {
+        Color(red: 0.12, green: 0.12, blue: 0.12).ignoresSafeArea(.all)
+    }
 }
 
-@ViewBuilder
-func makeBackgroundColor() -> some View {
-    Color(red: 0.12, green: 0.12, blue: 0.12).ignoresSafeArea(.all)
-}
+
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		092012D52CEC0DCC0080DF7E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092012D42CEC0DCC0080DF7E /* ViewExtensions.swift */; };
 		095409DE2CE2C6B900CA72C8 /* HealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095409DD2CE2C6B900CA72C8 /* HealthService.swift */; };
 		096AA8A92CE7FCB4000DEC17 /* WeatherModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096AA8A82CE7FCB4000DEC17 /* WeatherModelTest.swift */; };
 		0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2312CD4459900AEA5DF /* ServiceLocator.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		092012D42CEC0DCC0080DF7E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		095409DD2CE2C6B900CA72C8 /* HealthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthService.swift; sourceTree = "<group>"; };
 		096AA8A82CE7FCB4000DEC17 /* WeatherModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModelTest.swift; sourceTree = "<group>"; };
 		0996E2312CD4459900AEA5DF /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				0996E2372CD5802F00AEA5DF /* WeatherJSON.swift */,
 				09EE70182CDAC66E00943388 /* WeatherData.swift */,
 				09AD4CE92CDD7AC300D3BC2F /* WeatherInformationView.swift */,
+				092012D42CEC0DCC0080DF7E /* ViewExtensions.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */,
 				0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */,
 				09F3BB0E2CD03FC500344FC8 /* Assets.swift in Sources */,
+				092012D52CEC0DCC0080DF7E /* ViewExtensions.swift in Sources */,
 				09F3BB142CD04E0E00344FC8 /* NetworkService.swift in Sources */,
 				0996E2362CD5778F00AEA5DF /* WeatherModel.swift in Sources */,
 				0996E2382CD5802F00AEA5DF /* WeatherJSON.swift in Sources */,

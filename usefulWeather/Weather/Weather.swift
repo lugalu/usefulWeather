@@ -7,12 +7,13 @@ struct Weather: View {
     @EnvironmentObject var model: WeatherModel
     
     var body: some View {
-        VStack{
+        ScrollView(.vertical){
             if model.checkForAuth()  {
                 
                 if model.weatherData != nil {
                     WeatherInformation(weather: $model.weatherData)
-                    Divider()
+                        .padding(.bottom,8)
+
                     clothingInfo()
                 }else {
                     ProgressView()
@@ -60,16 +61,18 @@ struct Weather: View {
     private func clothingInfo() -> some View {
 
         if model.weatherData != nil && !model.recommendedClothing.isEmpty {
-            Text("The following clothes are recomendations based on the weather and the information stored on your health.*")
+            Text("Recommended clothes")
+                .font(.system(size: 26))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Divider()
             
             VStack(alignment: .leading){
                 ForEach(model.recommendedClothing, id: \.self) { clothe in
-                    Text("- \(clothe)")
+                    Text(clothe)
+                    Divider()
                 }
             }
             
-            Text("*If Health is authorized, otherwise average values based on reasearch.")
-            Text("These are not fashion advice, usem them as guides for what to wear.")
         } else {
             Text("Calculating Clothing")
         }

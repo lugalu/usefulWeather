@@ -173,8 +173,22 @@ class WeatherModel: ObservableObject, Observable {
         let indexOffset = index > indexTarget ? (indexTarget + averageUnderwearIndex) : 0
         
         var index = index - indexOffset
+        var shirtIndex = index / 2
+        var trousersIndex = shirtIndex
         var clothes: [String] = []
-        for category in clothingCategoriesCollection {
+        
+        let shirtResult = findPieceOfClothingFor(shirtIndex, dict: clothingCategoriesCollection[0])
+        shirtIndex = shirtResult.0
+        clothes.append(shirtResult.1)
+        
+        
+        let trousersResult = findPieceOfClothingFor(trousersIndex, dict: clothingCategoriesCollection[1])
+        trousersIndex = trousersResult.0
+        clothes.append(trousersResult.1)
+        
+        index = shirtIndex + trousersIndex
+        
+        for category in clothingCategoriesCollection.dropFirst(2) {
             let categoryResult = findPieceOfClothingFor(index, dict: category)
             index = categoryResult.0
             clothes.append(categoryResult.1)
