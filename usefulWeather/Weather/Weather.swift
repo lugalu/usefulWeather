@@ -8,15 +8,14 @@ struct Weather: View {
     
     var body: some View {
         ScrollView(.vertical){
-            if model.checkForAuth()  {
-                
+            if model.checkForAuth() {
                 if model.weatherData != nil {
                     WeatherInformation(weather: $model.weatherData)
                         .padding(.bottom,8)
-
                     clothingInfo()
                 }else {
                     ProgressView()
+                        .frame(maxWidth: .infinity)
                         .progressViewStyle(.circular)
                         .scaleEffect(3, anchor: .center)
                 }

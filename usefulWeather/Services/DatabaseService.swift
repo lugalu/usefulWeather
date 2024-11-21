@@ -17,7 +17,7 @@ class DatabaseService: DatabaseInterface {
             Wind.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+        
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
@@ -29,15 +29,16 @@ class DatabaseService: DatabaseInterface {
         return container.mainContext
     }()
     
-    
-    func fetchAllWeather() throws -> [WeatherData] {
+    func fetchAllWeather() async throws -> [WeatherData] {
         let descriptor = FetchDescriptor<WeatherData>()
         let result = try context.fetch(descriptor)
+ 
         return result
     }
     
+    @MainActor
     func fetchWeatherCache() async throws -> WeatherData? {
-        return try fetchAllWeather().first
+        return try await fetchAllWeather().first
     }
     
     func clearWeatherCache() throws {
@@ -46,6 +47,7 @@ class DatabaseService: DatabaseInterface {
         try context.delete(model: Wind.self)
     }
 
+    @MainActor
     func insertNewWeatherCache(_ weather: WeatherData) async throws {
         try clearWeatherCache()
         context.insert(weather)

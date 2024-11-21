@@ -34,13 +34,13 @@ class WeatherModel: ObservableObject, Observable {
             return
         }
         
-        var weather = try await downloadAndDecode()
+        var weather: WeatherData
 
+        await Task { @MainActor in locationAuthorizationStatus = authorizationStatus }.value
         if let cache = try await databaseService.fetchWeatherCache(),
             isValidCache(cache) {
             weather = cache
         }else {
-            await Task { @MainActor in locationAuthorizationStatus = authorizationStatus }.value
             weather = try await downloadAndDecode()
             try await databaseService.insertNewWeatherCache(weather)
         }
@@ -101,7 +101,7 @@ class WeatherModel: ObservableObject, Observable {
     }
     
 
-    
+    @MainActor
     func calculateClothing(weatherData: WeatherData) async throws -> Double? {
         guard var airTemperature = weatherData.temperature.real,
               var airVelocity = weatherData.wind.speed
