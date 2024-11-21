@@ -19,7 +19,6 @@ struct Weather: View {
                         .progressViewStyle(.circular)
                         .scaleEffect(3, anchor: .center)
                 }
-                
             } else {
                 errorView()
                     .redacted(reason: model.didAuthHappen() ? [] : .placeholder )
@@ -63,9 +62,10 @@ struct Weather: View {
             Text("Recommended clothes")
                 .font(.system(size: 26))
                 .frame(maxWidth: .infinity, alignment: .leading)
+            
             Divider()
             
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 ForEach(model.recommendedClothing, id: \.self) { clothe in
                     Text(clothe)
                     Divider()
@@ -73,7 +73,7 @@ struct Weather: View {
             }
             
         } else {
-            Text("Calculating Clothing")
+            Text("Error calculating Clothing")
         }
     }
     

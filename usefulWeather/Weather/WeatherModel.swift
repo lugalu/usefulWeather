@@ -40,9 +40,11 @@ class WeatherModel: ObservableObject, Observable {
         if let cache = try await databaseService.fetchWeatherCache(),
             isValidCache(cache) {
             weather = cache
+            
         }else {
             weather = try await downloadAndDecode()
             try await databaseService.insertNewWeatherCache(weather)
+            
         }
         
         let cloIndex = try await self.calculateClothing(weatherData: weather) ?? 1
@@ -63,6 +65,7 @@ class WeatherModel: ObservableObject, Observable {
         let data = try await networkingService.downloadData(from: .currentLocation(latitude: latitude, longitude: longitude))
         let json = try decoderService.decode(data, class: WeatherJSON.self)
         let weather = WeatherMapper.map(from: json)
+        
         return weather
     }
     
@@ -81,6 +84,7 @@ class WeatherModel: ObservableObject, Observable {
         guard let latitudeString = formatter.string(from: nsLatitude), let longitudeString = formatter.string(from: nsLongitude) else {
             throw NetworkErrors.unknowError
         }
+        
         return (latitudeString, longitudeString)
     }
     
@@ -108,6 +112,7 @@ class WeatherModel: ObservableObject, Observable {
         else {
             return nil
         }
+        
         airTemperature -= 273.15
         airTemperature = round(airTemperature)
         airVelocity *= 100
@@ -217,6 +222,7 @@ class WeatherModel: ObservableObject, Observable {
                 return (index, dict[key] ?? "error")
             }
         }
+        
         return (index, "")
     }
     

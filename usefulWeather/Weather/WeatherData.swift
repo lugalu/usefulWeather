@@ -139,6 +139,7 @@ struct WeatherMapper {
         guard var iconName = iconName, !iconName.isEmpty else { return "x.circle" }
         iconName.removeLast()
         guard let iconNum = Int(iconName), let systemIcon = iconDict[iconNum] else { return "x.circle" }
+        
         return systemIcon
     }
 }
