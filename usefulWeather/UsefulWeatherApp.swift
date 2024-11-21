@@ -9,23 +9,10 @@ struct UsefulWeatherApp: App {
     var locator = ServiceLocator(
         networkService: NetworkService(),
         decoderService: DecoderService(),
-        databaseContainer: Self.makeContainer(),
+        databaseContainer: DatabaseService(),
         geolocationService: GeoLocationService(),
         healthService: HealthService()
     )
-    
-    static func makeContainer() -> ModelContainer {
-        let schema = Schema([
-            //WeatherData.self
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }
     
 
     var body: some Scene {

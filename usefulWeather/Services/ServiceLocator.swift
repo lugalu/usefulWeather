@@ -7,13 +7,13 @@ import SwiftData
 class ServiceLocator: ObservableObject, Observable {
     private let networkService: NetworkInterface
     private let decoderService: DecoderService
-    private let databaseService: ModelContainer
+    private let databaseService: DatabaseInterface
     private let geolocationService: GeoLocationInterface
     private let healthService: HealthInterface?
     
     init(networkService: NetworkInterface,
          decoderService: DecoderService,
-         databaseContainer: ModelContainer,
+         databaseContainer: DatabaseInterface,
          geolocationService: GeoLocationInterface,
          healthService: HealthInterface?
     ) {
@@ -28,7 +28,7 @@ class ServiceLocator: ObservableObject, Observable {
     
     func getDecoderService() -> DecoderService { return decoderService }
     
-    func getDatabaseService() -> ModelContainer { return databaseService }
+    func getDatabaseService() -> DatabaseInterface { return databaseService }
     
     func getGeoLocationService() -> GeoLocationInterface { return geolocationService }
     

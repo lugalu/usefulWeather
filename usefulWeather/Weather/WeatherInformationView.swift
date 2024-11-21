@@ -138,20 +138,19 @@ struct WeatherInformation: View {
     WeatherInformation(weather: .constant(
                         WeatherData(cityName: "aaa",
                                     icon: "cloud",
-                                    iconColor: .gray,
                                     type: "",
                                     visibility: 10,
                                     clouds: 10,
                                     rain: 10,
                                     snow: 10,
                                     temperature:
-                                        WeatherData.Temperature(real: 292,
+                                        Temperature(real: 292,
                                                                 min: 287,
                                                                 max: 295,
                                                                 feelsLike: 292.5,
                                                                 pressure: 1015,
                                                                 humidity: 97),
-                                    wind: WeatherData.Wind(speed: 10,
+                                    wind: Wind(speed: 10,
                                                            degree: 10,
                                                            gust: 10)))
     )

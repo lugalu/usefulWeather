@@ -10,7 +10,7 @@ class WeatherModel: ObservableObject, Observable {
     @Published var locationAuthorizationStatus: CLAuthorizationStatus = .notDetermined
     let networkingService: NetworkInterface
     let decoderService: DecoderService
-    let databaseService: ModelContainer
+    let databaseService: DatabaseInterface
     let locationService: GeoLocationInterface
     let healthService: HealthInterface?
     
@@ -34,9 +34,17 @@ class WeatherModel: ObservableObject, Observable {
             return
         }
         
-        await Task { @MainActor in locationAuthorizationStatus = authorizationStatus }.value
+        var weather = try await downloadAndDecode()
+
+        if let cache = try await databaseService.fetchWeatherCache(),
+            isValidCache(cache) {
+            weather = cache
+        }else {
+            await Task { @MainActor in locationAuthorizationStatus = authorizationStatus }.value
+            weather = try await downloadAndDecode()
+            try await databaseService.insertNewWeatherCache(weather)
+        }
         
-        let weather = try await downloadAndDecode()
         let cloIndex = try await self.calculateClothing(weatherData: weather) ?? 1
         let clothes = getClothing(cloIndex).filter({ !$0.isEmpty })
         
@@ -44,6 +52,10 @@ class WeatherModel: ObservableObject, Observable {
             self.weatherData = weather
             self.recommendedClothing = clothes
         }.value
+    }
+    
+    func isValidCache(_ data: WeatherData) -> Bool {
+        return data.timestamp.timeIntervalSinceNow < (15 * 60)
     }
     
     func downloadAndDecode() async throws -> WeatherData {
