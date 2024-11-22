@@ -19,6 +19,7 @@ class EarthScene: SCNScene {
         configureTemporaryPlanet()
         createLight()
         createPlanetRotation()
+        makeT()
     }
     
     private func makeBackground() {
@@ -72,5 +73,16 @@ class EarthScene: SCNScene {
     func addLight() {
         guard let globalLight else { return }
         self.rootNode.addChildNode(globalLight)
+    }
+    
+    
+    func makeT() {
+        let program = SCNProgram()
+        program.vertexFunctionName = "textureSamplerVertex"
+        program.fragmentFunctionName = "textureSamplerFragment"
+        planetNode?.geometry?.firstMaterial?.program = program
+        
+        let materialProperty = SCNMaterialProperty(contents: Assets.earthColorMap!)
+        planetNode?.geometry?.firstMaterial?.setValue(materialProperty, forKey: "customTexture")
     }
 }

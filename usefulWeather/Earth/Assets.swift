@@ -14,6 +14,6 @@ final class Assets {
     static let earthColorMap = UIImage(named: "earth_diffuse")
     static let earthLightMap = UIImage (data: NSDataAsset(name: "earth_specular")!.data)
     static let earthHeightMap = UIImage(data:  NSDataAsset(name: "earth_normal")!.data)
-#endif
+#endif    
 }
 
