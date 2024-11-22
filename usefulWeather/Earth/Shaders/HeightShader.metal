@@ -22,7 +22,7 @@ struct VertexOut {
 
 vertex VertexOut textureSamplerVertex(VertexInput in [[ stage_in ]], constant NodeBuffer& scn_node [[buffer(1)]]) {
     VertexOut out;
-    out.position = scn_node.modelViewProjectionTransform * float4(in.position, 1.0);
+    out.position = scn_node.modelViewProjectionTransform * float4(in.position, 1);
     out.uv = in.uv;
     return out;
 }
@@ -30,6 +30,9 @@ vertex VertexOut textureSamplerVertex(VertexInput in [[ stage_in ]], constant No
 fragment float4 textureSamplerFragment(VertexOut out [[ stage_in ]], texture2d<float, access::sample> customTexture [[texture(0)]]) {
     constexpr sampler textureSampler(coord::normalized, filter::linear, address::repeat);
     float4 t = customTexture.sample(textureSampler, out.uv);
-    t /= 2;
-    return t;
+    
+    if (step(0.5, t.r) == 0) {
+        return float4(0.66, 1, 0, 1);
+    }
+    return float4(0, 0.4, 0.99, 1);
 }

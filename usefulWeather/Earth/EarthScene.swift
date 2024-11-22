@@ -18,7 +18,6 @@ class EarthScene: SCNScene {
         configureCamera()
         configureTemporaryPlanet()
         createLight()
-        createPlanetRotation()
         makeT()
     }
     
@@ -55,12 +54,6 @@ class EarthScene: SCNScene {
         self.globalLight = omniLightNode
     }
     
-    func createPlanetRotation() {
-        let action = SCNAction.rotate(by: 90, around: .init(x: 0, y: 3.14, z: 0), duration:  360)
-        let repeatAction = SCNAction.repeatForever(action)
-        self.planetRotation = repeatAction
-    }
-    
     func addPlanetRotation() {
         guard let planetRotation else { fatalError("Planet rotation not instantiated") }
         planetNode?.runAction(planetRotation)
@@ -82,7 +75,7 @@ class EarthScene: SCNScene {
         program.fragmentFunctionName = "textureSamplerFragment"
         planetNode?.geometry?.firstMaterial?.program = program
         
-        let materialProperty = SCNMaterialProperty(contents: Assets.earthColorMap!)
+        let materialProperty = SCNMaterialProperty(contents: Assets.earthLightMap!)
         planetNode?.geometry?.firstMaterial?.setValue(materialProperty, forKey: "customTexture")
     }
 }
