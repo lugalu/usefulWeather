@@ -18,7 +18,7 @@ class EarthScene: SCNScene {
         configureCamera()
         configureTemporaryPlanet()
         createLight()
-        makeT()
+        addLight()
     }
     
     private func makeBackground() {
@@ -30,11 +30,20 @@ class EarthScene: SCNScene {
     }
     
     func configureTemporaryPlanet() {
+        let program = SCNProgram()
+        program.vertexFunctionName = "textureSamplerVertex"
+        program.fragmentFunctionName = "textureSamplerFragment"
+        
+        let landOutline = SCNMaterialProperty(contents: Assets.earthLandOutline!)
+        let continentalOutline = SCNMaterialProperty(contents: Assets.earthContinentalBoundaries!)
+        let countriesOutline = SCNMaterialProperty(contents: Assets.earthCountriesOutline!)
+        
         let planetMaterial = SCNMaterial()
-        planetMaterial.diffuse.contents = Assets.earthColorMap
-        planetMaterial.specular.contents = Assets.earthLightMap
-        planetMaterial.normal.contents = Assets.earthHeightMap
-           
+        planetMaterial.program = program
+        planetMaterial.setValue(landOutline, forKey: "countryLand")
+        planetMaterial.setValue(continentalOutline, forKey: "continentOutline")
+        planetMaterial.setValue(countriesOutline, forKey: "countriesOutline")
+        
         let planetGeometry = SCNSphere(radius: 2)
         planetGeometry.materials = [planetMaterial]
 
@@ -52,6 +61,7 @@ class EarthScene: SCNScene {
         omniLightNode.light?.color = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
         omniLightNode.position = SCNVector3Make(50, 0, 30)
         self.globalLight = omniLightNode
+        self.lightingEnvironment.contents = omniLightNode
     }
     
     func addPlanetRotation() {
@@ -66,16 +76,5 @@ class EarthScene: SCNScene {
     func addLight() {
         guard let globalLight else { return }
         self.rootNode.addChildNode(globalLight)
-    }
-    
-    
-    func makeT() {
-        let program = SCNProgram()
-        program.vertexFunctionName = "textureSamplerVertex"
-        program.fragmentFunctionName = "textureSamplerFragment"
-        planetNode?.geometry?.firstMaterial?.program = program
-        
-        let materialProperty = SCNMaterialProperty(contents: Assets.earthLightMap!)
-        planetNode?.geometry?.firstMaterial?.setValue(materialProperty, forKey: "customTexture")
     }
 }

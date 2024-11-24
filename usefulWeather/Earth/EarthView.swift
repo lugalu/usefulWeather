@@ -11,7 +11,7 @@ struct EarthView: View {
         SceneView(
             scene: scene,
             pointOfView: cameraNode,
-            options: [.allowsCameraControl]
+            options: [.allowsCameraControl, .autoenablesDefaultLighting]
         )
     }
     

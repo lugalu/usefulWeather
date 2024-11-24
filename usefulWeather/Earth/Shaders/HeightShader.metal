@@ -27,12 +27,27 @@ vertex VertexOut textureSamplerVertex(VertexInput in [[ stage_in ]], constant No
     return out;
 }
 
-fragment float4 textureSamplerFragment(VertexOut out [[ stage_in ]], texture2d<float, access::sample> customTexture [[texture(0)]]) {
-    constexpr sampler textureSampler(coord::normalized, filter::linear, address::repeat);
-    float4 t = customTexture.sample(textureSampler, out.uv);
+fragment float4 textureSamplerFragment(VertexOut out [[ stage_in ]],
+                                       texture2d<float, access::sample> countryLand [[texture(0)]],
+                                       texture2d<float, access::sample> continentOutline [[texture(1)]],
+                                       texture2d<float, access::sample> countriesOutline [[texture(2)]]) {
+    constexpr sampler textureSampler;
+    float4 countryLandColor = countryLand.sample(textureSampler, out.uv);
+    float4 continentOutlineColor = continentOutline.sample(textureSampler, out.uv);
+    float4 countriesOutlineColor = countriesOutline.sample(textureSampler, out.uv);
     
-    if (step(0.5, t.r) == 0) {
+    if (continentOutlineColor.a != 0) {
+        return float4(1);
+    }
+    
+    if (countriesOutlineColor.a != 0){
+        return float4(0,0,0,1);
+    }
+    
+    
+    if (countryLandColor.a != 0) {
         return float4(0.66, 1, 0, 1);
     }
+    
     return float4(0, 0.4, 0.99, 1);
 }
