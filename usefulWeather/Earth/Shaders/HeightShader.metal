@@ -12,6 +12,7 @@ struct NodeBuffer {
 
 struct VertexInput {
     float3 position  [[attribute(SCNVertexSemanticPosition)]];
+    float3 normal [[attribute(SCNVertexSemanticNormal)]];
     float2 uv [[attribute(SCNVertexSemanticTexcoord0)]];
 };
 
@@ -20,17 +21,26 @@ struct VertexOut {
     float2 uv;
 };
 
-vertex VertexOut textureSamplerVertex(VertexInput in [[ stage_in ]], constant NodeBuffer& scn_node [[buffer(1)]]) {
+vertex VertexOut textureSamplerVertex(VertexInput in [[ stage_in ]],
+                                      constant NodeBuffer& scn_node [[buffer(1)]],
+                                      texture2d<float, access::sample> heightMap [[texture(0)]]) {
+    constexpr sampler textureSampler;
+    float col = heightMap.sample(textureSampler, in.uv).r;
+    col = sqrt(1 - pow(col - 1, 2));
+    float3 t = in.normal * col * 0.1 ;
     VertexOut out;
-    out.position = scn_node.modelViewProjectionTransform * float4(in.position, 1);
+    out.position = scn_node.modelViewProjectionTransform * float4(in.position + t, 1);
+    
+    
     out.uv = in.uv;
     return out;
 }
 
 fragment float4 textureSamplerFragment(VertexOut out [[ stage_in ]],
-                                       texture2d<float, access::sample> countryLand [[texture(0)]],
-                                       texture2d<float, access::sample> continentOutline [[texture(1)]],
-                                       texture2d<float, access::sample> countriesOutline [[texture(2)]]) {
+                                       texture2d<float, access::sample> heightMap [[texture(0)]],
+                                       texture2d<float, access::sample> countryLand [[texture(1)]],
+                                       texture2d<float, access::sample> continentOutline [[texture(2)]],
+                                       texture2d<float, access::sample> countriesOutline [[texture(3)]]) {
     constexpr sampler textureSampler;
     float4 countryLandColor = countryLand.sample(textureSampler, out.uv);
     float4 continentOutlineColor = continentOutline.sample(textureSampler, out.uv);
@@ -46,7 +56,11 @@ fragment float4 textureSamplerFragment(VertexOut out [[ stage_in ]],
     
     
     if (countryLandColor.a != 0) {
-        return float4(0.66, 1, 0, 1);
+        float colorModifier = heightMap.sample(textureSampler, out.uv).r;
+        colorModifier = 1 - sqrt(1 - pow(colorModifier- 1, 2));
+        float3 col = float3(0.66, 1, 0) * colorModifier;
+        
+        return float4(col, 1);
     }
     
     return float4(0, 0.4, 0.99, 1);
