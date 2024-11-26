@@ -39,6 +39,7 @@ class EarthScene: SCNScene {
         let continentalOutline = SCNMaterialProperty(contents: Assets.earthContinentalBoundaries!)
         let countriesOutline = SCNMaterialProperty(contents: Assets.earthCountriesOutline!)
         let snowCover = SCNMaterialProperty(contents: Assets.earthSnowCover!)
+        let nightLights = SCNMaterialProperty(contents: Assets.earthLightEmission!)
         
         let planetMaterial = SCNMaterial()
         planetMaterial.program = program
@@ -47,6 +48,8 @@ class EarthScene: SCNScene {
         planetMaterial.setValue(continentalOutline, forKey: "continentOutline")
         planetMaterial.setValue(countriesOutline, forKey: "countriesOutline")
         planetMaterial.setValue(snowCover, forKey: "snowCover")
+        planetMaterial.setValue(nightLights, forKey: "nightLights")
+
         
         let width = 2048 / 16
         
@@ -59,6 +62,21 @@ class EarthScene: SCNScene {
         
         self.rootNode.addChildNode(planetNode)
         self.planetNode = planetNode
+        
+        
+//        let testMaterial = SCNMaterial()
+//        testMaterial.diffuse.contents = Assets.earthLightEmission!
+//        
+//        //testMaterial.transparent.contents = Assets.earthLightMap!
+//        testMaterial.emission.contents = Assets.earthLightEmission!
+//        let testGeometry = SCNSphere(radius: 2.01)
+//        testGeometry.segmentCount = width
+//        testGeometry.materials = [testMaterial]
+//        
+//        let testNode = SCNNode(geometry: testGeometry)
+//        testNode.position = SCNVector3(0,0,0)
+//        
+//        self.planetNode?.addChildNode(testNode)
     }
     
     func createLight() {
