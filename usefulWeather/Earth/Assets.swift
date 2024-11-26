@@ -13,6 +13,7 @@ final class Assets {
     static let earthLandOutline = NSImage(named: "country_outline")
     static let earthContinentalBoundaries = NSImage(named: "continentalBoundaries")
     static let earthCountriesOutline = NSImage(named: "inlandBoundaries")
+    static let earthSnowCover = NSImage(named: "snowCover")
 #else
     static let earthColorMap = UIImage(named: "earth_diffuse")
     static let earthLightMap = UIImage (data: NSDataAsset(name: "earth_specular")!.data)
@@ -21,6 +22,7 @@ final class Assets {
     static let earthLandOutline = UIImage(named: "country_outline")
     static let earthContinentalBoundaries = UIImage(named: "continentalBoundaries")
     static let earthCountriesOutline = UIImage(named: "inlandBoundaries")
+    static let earthSnowCover = UIImage(named: "snowCover")
 #endif
 }
 

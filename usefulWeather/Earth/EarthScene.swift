@@ -34,10 +34,11 @@ class EarthScene: SCNScene {
         program.vertexFunctionName = "textureSamplerVertex"
         program.fragmentFunctionName = "textureSamplerFragment"
         
+        let heightMap = SCNMaterialProperty(contents: Assets.earthHeightMap!)
         let landOutline = SCNMaterialProperty(contents: Assets.earthLandOutline!)
         let continentalOutline = SCNMaterialProperty(contents: Assets.earthContinentalBoundaries!)
         let countriesOutline = SCNMaterialProperty(contents: Assets.earthCountriesOutline!)
-        let heightMap = SCNMaterialProperty(contents: Assets.earthHeightMap!)
+        let snowCover = SCNMaterialProperty(contents: Assets.earthSnowCover!)
         
         let planetMaterial = SCNMaterial()
         planetMaterial.program = program
@@ -45,16 +46,12 @@ class EarthScene: SCNScene {
         planetMaterial.setValue(landOutline, forKey: "countryLand")
         planetMaterial.setValue(continentalOutline, forKey: "continentOutline")
         planetMaterial.setValue(countriesOutline, forKey: "countriesOutline")
+        planetMaterial.setValue(snowCover, forKey: "snowCover")
         
         let width = 2048 / 16
         
         let planetGeometry = SCNSphere(radius: 2)
         planetGeometry.segmentCount = width
-//        planetGeometry.heightSegmentCount = height * 2
-//        planetGeometry.height = CGFloat(height)
-//        planetGeometry.widthSegmentCount = width * 2
-//        planetGeometry.width = CGFloat(width)
-        //planetGeometry.segmentCount = 2000
         planetGeometry.materials = [planetMaterial]
 
         let planetNode = SCNNode(geometry: planetGeometry)
