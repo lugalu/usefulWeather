@@ -2,6 +2,10 @@
 using namespace metal;
 #include <SceneKit/scn_metal>
 
+struct CustomData {
+    float3 viewPosition;
+};
+
 struct NodeBuffer {
     float4x4 modelTransform;
     float4x4 modelViewProjectionTransform;
@@ -30,8 +34,7 @@ float easeInOutCubic(sampler textSample, float2 uv, texture2d<float, access::sam
 }
 
 vertex VertexOut textureSamplerVertex(VertexInput in [[ stage_in ]],
-                                      constant NodeBuffer& scn_node [[buffer(1)]],
-                                      constant float4x4& modelMatrix [[buffer(2)]],
+                                      constant NodeBuffer& scn_node [[buffer(2)]],
                                       texture2d<float, access::sample> heightMap [[texture(0)]]) {
     constexpr sampler textureSampler;
     
@@ -40,14 +43,16 @@ vertex VertexOut textureSamplerVertex(VertexInput in [[ stage_in ]],
     float3 newVertexPos = in.position + vertexHeightOffset;
     
     VertexOut out;
-    out.worldPosition = (modelMatrix * float4(in.position, 1.0)).xyz;
+    out.worldPosition = (float4(in.position, 1.0)).xyz;
     out.position = scn_node.modelViewProjectionTransform * float4(newVertexPos, 1);
     out.uv = in.uv;
     out.normal = in.normal;
     
     return out;
 }
-float4 calculateColor(VertexOut out,
+
+
+float4 calculateColor(VertexOut vertexInput,
                       sampler textureSampler,
                       texture2d<float, access::sample> heightMap,
                       texture2d<float, access::sample> countryLand,
@@ -56,26 +61,26 @@ float4 calculateColor(VertexOut out,
                       texture2d<float, access::sample> snowCover
                       ) {
     
-    float4 continentOutlineColor = continentOutline.sample(textureSampler, out.uv);
+    float4 continentOutlineColor = continentOutline.sample(textureSampler, vertexInput.uv);
     if (continentOutlineColor.a != 0) {
         return float4(1, 0.98
 , 0.8, 1);
     }
     
-    float4 countriesOutlineColor = countriesOutline.sample(textureSampler, out.uv);
+    float4 countriesOutlineColor = countriesOutline.sample(textureSampler, vertexInput.uv);
     if (countriesOutlineColor.a != 0){
         return float4(0.16, 0.18, 0.21, 1);
     }
     
-    float4 snowCoverColor = snowCover.sample(textureSampler, out.uv);
+    float4 snowCoverColor = snowCover.sample(textureSampler, vertexInput.uv);
     if(snowCoverColor.a == 1) {
-        float3 col = abs(1 - (float3(0.8, 0.93, 0.98) + easeInOutCubic(textureSampler, out.uv, snowCover)));
+        float3 col = abs(1 - (float3(0.8, 0.93, 0.98) + easeInOutCubic(textureSampler, vertexInput.uv, snowCover)));
         return float4(col, 1);
     }
     
-    float4 countryLandColor = countryLand.sample(textureSampler, out.uv);
+    float4 countryLandColor = countryLand.sample(textureSampler, vertexInput.uv);
     if (countryLandColor.a != 0) {
-        float colorModifier = 1 - easeInOutCubic(textureSampler, out.uv, heightMap);
+        float colorModifier = 1 - easeInOutCubic(textureSampler, vertexInput.uv, heightMap);
         float3 color = float3(0.66, 1, 0) * colorModifier;
         return float4(color, 1);
     }
@@ -87,21 +92,21 @@ float4 calculateColor(VertexOut out,
 
 constant float3 lightDirection = float3(0.436436, -0.2, 0.218218);
 constant float3 lightAmbient = float3(0.0);
-constant float3 lightDiffuse = float3(1.0);
-constant float3 lightSpecular = float3(1);
+constant float3 lightDiffuse = float3(1);
 
-fragment float4 textureSamplerFragment(VertexOut out [[ stage_in ]],
-                                       constant float3& viewPosition [[buffer(0)]],
+fragment float4 textureSamplerFragment(VertexOut vertexInput [[ stage_in ]],
+                                       constant CustomData& data [[buffer(5)]],
                                        texture2d<float, access::sample> heightMap [[texture(0)]],
                                        texture2d<float, access::sample> countryLand [[texture(1)]],
                                        texture2d<float, access::sample> continentOutline [[texture(2)]],
                                        texture2d<float, access::sample> countriesOutline [[texture(3)]],
                                        texture2d<float, access::sample> snowCover [[texture(4)]],
-                                       texture2d<float, access::sample> nightLights [[texture(5)]]
+                                       texture2d<float, access::sample> nightLights [[texture(5)]],
+                                       texture2d<float, access::sample> specularMap [[texture(6)]]
                                        ) {
     constexpr sampler textureSampler;
-    
-    float3 diffuseColor = calculateColor(out,
+    return float4(0.5 + normalize(data.viewPosition),1);
+    float3 diffuseColor = calculateColor(vertexInput,
                           textureSampler,
                           heightMap,
                           countryLand,
@@ -112,24 +117,28 @@ fragment float4 textureSamplerFragment(VertexOut out [[ stage_in ]],
     
     //Ambient
     float3 ambient = lightAmbient * diffuseColor;
-    float3 normal = normalize(out.normal);
+    float3 normal = normalize(vertexInput.normal);
+    
     //Diffuse
-    float3 diff = max(dot(normal, -lightDirection), 0.0);
-    float3 diffuse = lightDiffuse * diff * diffuseColor;
+    float3 diffuseDot = max(dot(normal, -lightDirection), 0.0);
+    float3 diffuseResult = lightDiffuse * diffuseDot * diffuseColor;
     
     //Specular
-    float3 viewDir = normalize(viewPosition - out.worldPosition);
+    float3 viewDir = normalize(data.viewPosition - vertexInput.worldPosition);
     float3 reflectDir = reflect(lightDirection, normal);
     float3 spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    
+    float3 lightSpecular = specularMap.sample(textureSampler, vertexInput.uv).rgb;
     float3 specular = lightSpecular * spec;
     
-    float3 result = float3(ambient+diffuse+specular);
+    
+    float3 result = float3(ambient + diffuseResult + specular);
     if (result.r == 0 && result.g == 0 && result.b == 0){
-        float4 nightLightsColor = nightLights.sample(textureSampler, out.uv);
+        float4 nightLightsColor = nightLights.sample(textureSampler, vertexInput.uv);
         if (nightLightsColor.a != 0){
             return nightLightsColor;
         }
     }
     
-    return float4(float3(ambient + diffuse + specular),1);
+    return float4(result,1);
 }

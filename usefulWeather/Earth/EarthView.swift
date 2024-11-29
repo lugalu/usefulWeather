@@ -5,20 +5,21 @@ import SceneKit
 
 struct EarthView: View {
     let scene = EarthScene()
-    let cameraNode: SCNNode = createCameraNode()
+
     
     var body: some View {
-        SceneView(
-            scene: scene,
-            pointOfView: cameraNode,
-            options: [.allowsCameraControl, .autoenablesDefaultLighting]
-        )
-    }
-    
-    private static func createCameraNode() -> SCNNode {
-        let node = SCNNode()
-        node.camera = SCNCamera()
-        return node
+        ZStack {
+            SceneView(
+                scene: scene,
+                pointOfView: scene.cameraNode,
+                options: [.allowsCameraControl,.autoenablesDefaultLighting],
+                delegate: scene
+            )
+         
+            Button(action: {
+                scene.test()
+            }, label: { Text("try me")})
+        }
     }
 }
 
