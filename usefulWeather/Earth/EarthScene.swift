@@ -3,15 +3,16 @@
 import SceneKit
 
 fileprivate struct CustomData {
-    var viewPosition: simd_float3
+    var viewPosition: simd_float3 = simd_float3()
+    var lightDirection: simd_float3 = simd_float3(0.436436, -0.2, 0.218218)
 }
 
 class EarthScene: SCNScene, SCNSceneRendererDelegate {
 
     private var planetNode: SCNNode?
-    private var globalLight: SCNNode?
+    private var light: SCNNode?
     private var planetRotation: SCNAction?
-    private var data: CustomData = CustomData(viewPosition: simd_float3())
+    private var data: CustomData = CustomData()
     let cameraNode: SCNNode = SCNNode()
 
     
@@ -21,16 +22,32 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
     
     override init() {
         super.init()
+        
+        let node = SCNNode()
+        let light = SCNLight()
+        node.light = light
+        node.position = SCNVector3(x: 0.436436, y: -0.2, z: 0.218218)
+        node.eulerAngles = SCNVector3(x: 0.436436 , y: -0.2, z: 0.218218)
+        self.light = node
+        self.rootNode.addChildNode(self.light!)
         makeBackground()
         configureCamera()
         configureTemporaryPlanet()
-        createLight()
-        addLight()
     }
     
     func test() {
-        let currentRotation = planetNode!.eulerAngles.y
-        planetNode?.eulerAngles = SCNVector3Make(0, currentRotation + .pi/180, 0);
+        func rotateAroundYAxis(vector: simd_float3, angle: Float) -> simd_float3 {
+            let rotationMatrix = float3x3(
+                simd_float3(cos(angle), 0, sin(angle)),
+                simd_float3(0, 1, 0),
+                simd_float3(-sin(angle), 0, cos(angle))
+            )
+            return rotationMatrix * vector
+        }
+        self.planetNode?.simdEulerAngles = rotateAroundYAxis(vector: self.planetNode!.simdEulerAngles, angle: .pi/180)
+        data.lightDirection = rotateAroundYAxis(vector: data.lightDirection, angle: .pi/180)
+        print(data.lightDirection)
+        
     }
     
     func renderer(_ renderer: any SCNSceneRenderer, updateAtTime time: TimeInterval) {
@@ -102,33 +119,5 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
         self.rootNode.addChildNode(planetNode)
         self.planetNode = planetNode
     }
-    
-    
-    
-    func createLight() {
-        let omniLightNode = SCNNode()
-        omniLightNode.light = SCNLight()
-        omniLightNode.light?.type = SCNLight.LightType.omni
-        omniLightNode.light?.color = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-        omniLightNode.position = SCNVector3Make(50, 0, 30)
-        self.globalLight = omniLightNode
-        self.lightingEnvironment.contents = omniLightNode
-    }
-    
-    func addPlanetRotation() {
-        guard let planetRotation else { fatalError("Planet rotation not instantiated") }
-        planetNode?.runAction(planetRotation)
-    }
-    func disablePlanetRotation() {
-        planetNode?.removeAllActions()
-    }
-
-    
-    func addLight() {
-        guard let globalLight else { return }
-        self.rootNode.addChildNode(globalLight)
-    }
-    
-    
     
 }

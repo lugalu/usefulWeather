@@ -8,17 +8,19 @@ struct EarthView: View {
 
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             SceneView(
                 scene: scene,
                 pointOfView: scene.cameraNode,
-                options: [.allowsCameraControl,.autoenablesDefaultLighting],
+                options: [.allowsCameraControl,.autoenablesDefaultLighting, .rendersContinuously],
                 delegate: scene
             )
          
             Button(action: {
                 scene.test()
-            }, label: { Text("try me")})
+            }, label: { Text("Rotate Earth (temporary)")})
+            .font(.largeTitle)
+            .buttonStyle(.borderedProminent)
         }
     }
 }

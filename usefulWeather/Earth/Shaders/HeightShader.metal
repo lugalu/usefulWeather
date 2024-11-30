@@ -4,6 +4,7 @@ using namespace metal;
 
 struct CustomData {
     float3 viewPosition;
+    float3 lightDirection;
 };
 
 struct NodeBuffer {
@@ -89,8 +90,6 @@ float4 calculateColor(VertexOut vertexInput,
     
 }
 
-
-constant float3 lightDirection = float3(0.436436, -0.2, 0.218218);
 constant float3 lightAmbient = float3(0.0);
 constant float3 lightDiffuse = float3(1);
 
@@ -105,7 +104,6 @@ fragment float4 textureSamplerFragment(VertexOut vertexInput [[ stage_in ]],
                                        texture2d<float, access::sample> specularMap [[texture(6)]]
                                        ) {
     constexpr sampler textureSampler;
-    return float4(0.5 + normalize(data.viewPosition),1);
     float3 diffuseColor = calculateColor(vertexInput,
                           textureSampler,
                           heightMap,
@@ -120,16 +118,16 @@ fragment float4 textureSamplerFragment(VertexOut vertexInput [[ stage_in ]],
     float3 normal = normalize(vertexInput.normal);
     
     //Diffuse
-    float3 diffuseDot = max(dot(normal, -lightDirection), 0.0);
+    float3 diffuseDot = max(dot(normal, -data.lightDirection), 0.0);
     float3 diffuseResult = lightDiffuse * diffuseDot * diffuseColor;
     
     //Specular
     float3 viewDir = normalize(data.viewPosition - vertexInput.worldPosition);
-    float3 reflectDir = reflect(lightDirection, normal);
+    float3 reflectDir = reflect(data.lightDirection, normal);
     float3 spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     
     float3 lightSpecular = specularMap.sample(textureSampler, vertexInput.uv).rgb;
-    float3 specular = lightSpecular * spec;
+    float3 specular = lightSpecular * spec ;
     
     
     float3 result = float3(ambient + diffuseResult + specular);
