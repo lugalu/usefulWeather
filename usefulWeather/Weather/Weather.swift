@@ -13,11 +13,6 @@ struct Weather: View {
                     WeatherInformation(weather: $model.weatherData)
                         .padding(.bottom,8)
                     clothingInfo()
-                }else {
-                    ProgressView()
-                        .frame(maxWidth: .infinity)
-                        .progressViewStyle(.circular)
-                        .scaleEffect(3, anchor: .center)
                 }
             } else {
                 errorView()
@@ -26,6 +21,13 @@ struct Weather: View {
             }
         }
         .padding(.horizontal)
+        .overlay(alignment: .center){
+            if model.checkForAuth() && model.weatherData == nil {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .scaleEffect(3, anchor: .center)
+            }
+        }
         .task {
             do {
                 try await model.fetchWeather()

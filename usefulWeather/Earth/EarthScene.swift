@@ -10,7 +10,6 @@ fileprivate struct CustomData {
 class EarthScene: SCNScene, SCNSceneRendererDelegate {
 
     private var planetNode: SCNNode?
-    private var light: SCNNode?
     private var planetRotation: SCNAction?
     private var data: CustomData = CustomData()
     let cameraNode: SCNNode = SCNNode()
@@ -22,14 +21,6 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
     
     override init() {
         super.init()
-        
-        let node = SCNNode()
-        let light = SCNLight()
-        node.light = light
-        node.position = SCNVector3(x: 0.436436, y: -0.2, z: 0.218218)
-        node.eulerAngles = SCNVector3(x: 0.436436 , y: -0.2, z: 0.218218)
-        self.light = node
-        self.rootNode.addChildNode(self.light!)
         makeBackground()
         configureCamera()
         configureTemporaryPlanet()
@@ -46,8 +37,6 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
         }
         self.planetNode?.simdEulerAngles = rotateAroundYAxis(vector: self.planetNode!.simdEulerAngles, angle: .pi/180)
         data.lightDirection = rotateAroundYAxis(vector: data.lightDirection, angle: .pi/180)
-        print(data.lightDirection)
-        
     }
     
     func renderer(_ renderer: any SCNSceneRenderer, updateAtTime time: TimeInterval) {

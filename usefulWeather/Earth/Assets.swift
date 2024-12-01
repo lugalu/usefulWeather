@@ -15,6 +15,7 @@ final class Assets {
     static let earthCountriesOutline = NSImage(named: "inlandBoundaries")
     static let earthSnowCover = NSImage(named: "snowCover")
     static let earthLightEmission = NSImage(named: "earth_nightLights")
+    static let clockSize: CGFloat = 300
 #else
     static let earthColorMap = UIImage(named: "earth_diffuse")
     static let earthSpecularMap = UIImage (data: NSDataAsset(name: "earth_specular")!.data)
@@ -25,7 +26,10 @@ final class Assets {
     static let earthCountriesOutline = UIImage(named: "inlandBoundaries")
     static let earthSnowCover = UIImage(named: "snowCover")
     static let earthLightEmission = UIImage(named: "earth_nightLights")
+    static let clockSize: CGFloat = 150
 
 #endif
+    
+    static var clockOffset = clockSize / 2
 }
 
