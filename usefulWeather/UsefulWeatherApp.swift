@@ -15,8 +15,10 @@ struct UsefulWeatherApp: App {
     )
     
     init() {
-        UITabBar.appearance().isTranslucent = false
-        UITabBar.appearance().backgroundColor = .systemBackground
+        #if os(iOS)
+            UITabBar.appearance().isTranslucent = false
+            UITabBar.appearance().backgroundColor = .systemBackground
+        #endif
     }
     
 

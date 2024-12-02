@@ -26,7 +26,7 @@ final class Assets {
     static let earthCountriesOutline = UIImage(named: "inlandBoundaries")
     static let earthSnowCover = UIImage(named: "snowCover")
     static let earthLightEmission = UIImage(named: "earth_nightLights")
-    static let clockSize: CGFloat = 150
+    static let clockSize: CGFloat = 300
 
 #endif
     

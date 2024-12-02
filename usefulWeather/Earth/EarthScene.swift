@@ -6,11 +6,10 @@ fileprivate struct CustomData {
     var viewPosition: simd_float3 = simd_float3()
     var lightDirection: simd_float3 = simd_float3(0.436436, -0.2, 0.218218)
 }
-
+//TODO: missing geometry for weather,
 class EarthScene: SCNScene, SCNSceneRendererDelegate {
 
     private var planetNode: SCNNode?
-    private var planetRotation: SCNAction?
     private var data: CustomData = CustomData()
     let cameraNode: SCNNode = SCNNode()
 
@@ -26,7 +25,7 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
         configureTemporaryPlanet()
     }
     
-    func test() {
+    func rotate(withAngle newAngle: Float) {
         func rotateAroundYAxis(vector: simd_float3, angle: Float) -> simd_float3 {
             let rotationMatrix = float3x3(
                 simd_float3(cos(angle), 0, sin(angle)),
@@ -35,8 +34,8 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
             )
             return rotationMatrix * vector
         }
-        self.planetNode?.simdEulerAngles = rotateAroundYAxis(vector: self.planetNode!.simdEulerAngles, angle: .pi/180)
-        data.lightDirection = rotateAroundYAxis(vector: data.lightDirection, angle: .pi/180)
+       // self.planetNode?.simdEulerAngles = rotateAroundYAxis(vector: self.planetNode!.simdEulerAngles, angle: newAngle * .pi/180)
+        data.lightDirection = rotateAroundYAxis(vector: data.lightDirection, angle: newAngle * .pi/180)
     }
     
     func renderer(_ renderer: any SCNSceneRenderer, updateAtTime time: TimeInterval) {
@@ -93,9 +92,6 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
             "specularMap": specularMap
         ])
 
-        
-
-        
         let width = 2048 / 16
         
         let planetGeometry = SCNSphere(radius: 2)
