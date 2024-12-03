@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		092012D52CEC0DCC0080DF7E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092012D42CEC0DCC0080DF7E /* ViewExtensions.swift */; };
+		0925F73C2CFE915000F51187 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0925F73B2CFE915000F51187 /* MapData.swift */; };
 		095409DE2CE2C6B900CA72C8 /* HealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095409DD2CE2C6B900CA72C8 /* HealthService.swift */; };
 		096AA8A92CE7FCB4000DEC17 /* WeatherModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096AA8A82CE7FCB4000DEC17 /* WeatherModelTest.swift */; };
 		0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2312CD4459900AEA5DF /* ServiceLocator.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		092012D42CEC0DCC0080DF7E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		0925F73B2CFE915000F51187 /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
 		095409DD2CE2C6B900CA72C8 /* HealthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthService.swift; sourceTree = "<group>"; };
 		096AA8A82CE7FCB4000DEC17 /* WeatherModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModelTest.swift; sourceTree = "<group>"; };
 		0996E2312CD4459900AEA5DF /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				09E0E4A62CCEE795000E48BD /* EarthView.swift */,
 				09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */,
 				09F3BB0D2CD03FC500344FC8 /* Assets.swift */,
+				0925F73B2CFE915000F51187 /* MapData.swift */,
 			);
 			path = Earth;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				095409DE2CE2C6B900CA72C8 /* HealthService.swift in Sources */,
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
 				09EA78F62CD1AADB00036172 /* DecoderService.swift in Sources */,
+				0925F73C2CFE915000F51187 /* MapData.swift in Sources */,
 				09AD4CEA2CDD7AC300D3BC2F /* WeatherInformationView.swift in Sources */,
 				09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */,
 				0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */,
