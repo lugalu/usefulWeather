@@ -32,11 +32,11 @@ struct EarthView: View {
             
             helpAndClockView()
             
-//            if let t = test.t, let c = NSImage(data: t) {
-//                Image(nsImage: c)
-//                    .background(.black)
+//            if let t = test.t {
+//                Image(nsImage: t)
+//                    .resizable()
+//                    .scaledToFit()
 //            }
-//            
         }
         .alert("Information", isPresented: $isShowingAlert){} message: {
             Text("The Time of day displayed here does not reflect on the weather, is purely cosmetic and based on real world data from many satellites including NASA, natural earth, open weather, and more.")

@@ -12,7 +12,7 @@ fileprivate struct CustomData {
 class Test: ObservableObject {
     static let Shared = Test()
     
-    @Published var t: Data? = nil 
+    @Published var t: Data? = nil
     
     
 }
@@ -181,9 +181,10 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
         self.rootNode.addChildNode(weatherNode)
         self.weatherNode = weatherNode
         
-        Task {@MainActor in
-            Test.Shared.t = mapData.cloudMap
-        }
+//        Task {@MainActor in
+//            Test.Shared.t = mapData.getCloudMap()
+//            
+//        }
 
     }
     

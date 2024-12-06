@@ -70,18 +70,63 @@ float4 calculateCloudsColor(float2 uv,float4 cloudsColor) {
     return float4(col,alpha);
 }
 
+
+float2 mercatorToEquirectangular(float2 uv) {
+    //uv to equirectangular
+    float lat = (uv.x) * 2 * M_PI_F;    // from 0 to 2PI
+    float lon = (uv.y - .5f) * M_PI_F;  // from -PI to PI
+
+    // equirectangular to mercator
+    float x = lat;
+    float y = log(tan(M_PI_F / 4. + lon / 2.));
+
+    // bring x,y into [0,1] range
+    x = x / (2 * M_PI_F);
+    y = (y + M_PI_F) / (2 * M_PI_F);
+
+    // sample mercator projection
+    return float2(x,y);
+}
+
+/*
+ void reSample(in int d, in vec2 uv, inout vec4 fragColor)
+ {
+  
+     vec2 step1 = (vec2(d) + 0.5) / iResolution.xy;
+     
+     fragColor += texture(iChannel0, uv + step1) / float(4);
+     fragColor += texture(iChannel0,  uv - step1) / float(4);
+       vec2 step2 = step1;
+     step2.x = -step2.x;
+     fragColor += texture(iChannel0, uv + step2) / float(4);
+     fragColor += texture(iChannel0,  uv - step2) / float(4);
+ }
+ */
+
+
+float4 blur(sampler textureSampler, texture2d<float, access::sample> texture, float2 uv,float4 col) {
+    float2 resolution = float2(2048, 1024);
+    
+    float blur = uv.x / resolution.x * 7;
+    
+    return col;
+}
+
 fragment float4 cloudsShader(VertexInput in [[stage_in]],
                              texture2d<float, access::sample> cloudMap,
                              texture2d<float, access::sample> rainMap,
                              texture2d<float, access::sample> temperatureMap
                  ){
     constexpr sampler textureSampler;
+    float2 uv = mercatorToEquirectangular(in.uv);
     
-    float4 cloudsColor = cloudMap.sample(textureSampler, in.uv);
-    if (cloudsColor.a > 0.2) {
-        return calculateCloudsColor(in.uv, cloudsColor);
+    float4 result = float4(0);
+    
+    float4 cloudsColor = cloudMap.sample(textureSampler, uv);
+    if (cloudsColor.a > 0) {
+        result =  calculateCloudsColor(uv, cloudsColor);
     }
     
-    
-    return float4(0,0,0,0);
+
+    return result;
 }
