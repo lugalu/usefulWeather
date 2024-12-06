@@ -1,11 +1,22 @@
 //Created by Lugalu on 28/10/24.
 
 import SceneKit
+import SwiftUI
 
 fileprivate struct CustomData {
     var viewPosition: simd_float3 = simd_float3()
     var lightDirection: simd_float3 = simd_float3(0.436436, -0.2, 0.218218)
 }
+
+
+class Test: ObservableObject {
+    static let Shared = Test()
+    
+    @Published var t: Data? = nil 
+    
+    
+}
+
 //TODO: missing geometry for weather,
 class EarthScene: SCNScene, SCNSceneRendererDelegate {
     
@@ -162,13 +173,18 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
         weatherMaterial.setValuesForKeys(makeWeatherMaterialsDict(mapData))
         
         let width = 2048 / 16
-        let weatherGeometry = SCNSphere(radius: 2.3)
+        let weatherGeometry = SCNSphere(radius: 2.1)
         weatherGeometry.segmentCount = width
         weatherGeometry.materials = [weatherMaterial]
         
         let weatherNode = SCNNode(geometry: weatherGeometry)
         self.rootNode.addChildNode(weatherNode)
         self.weatherNode = weatherNode
+        
+        Task {@MainActor in
+            Test.Shared.t = mapData.cloudMap
+        }
+
     }
     
     private func makeWeatherMaterialsDict(_ mapData: MapData) -> [String: Any]{

@@ -12,6 +12,7 @@ struct EarthView: View {
     let scene = EarthScene()
     @State var angle: Angle = .degrees(0)
     @State var isShowingAlert = false
+    @ObservedObject var test = Test.Shared
     
 
     
@@ -27,7 +28,15 @@ struct EarthView: View {
                 scene.injectLocator(locator)
             }
             
+
+            
             helpAndClockView()
+            
+//            if let t = test.t, let c = NSImage(data: t) {
+//                Image(nsImage: c)
+//                    .background(.black)
+//            }
+//            
         }
         .alert("Information", isPresented: $isShowingAlert){} message: {
             Text("The Time of day displayed here does not reflect on the weather, is purely cosmetic and based on real world data from many satellites including NASA, natural earth, open weather, and more.")
