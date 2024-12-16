@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		092012D52CEC0DCC0080DF7E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092012D42CEC0DCC0080DF7E /* ViewExtensions.swift */; };
+		0925F73C2CFE915000F51187 /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0925F73B2CFE915000F51187 /* MapData.swift */; };
 		095409DE2CE2C6B900CA72C8 /* HealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095409DD2CE2C6B900CA72C8 /* HealthService.swift */; };
 		096AA8A92CE7FCB4000DEC17 /* WeatherModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096AA8A82CE7FCB4000DEC17 /* WeatherModelTest.swift */; };
 		0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996E2312CD4459900AEA5DF /* ServiceLocator.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		092012D42CEC0DCC0080DF7E /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		0925F73B2CFE915000F51187 /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
 		095409DD2CE2C6B900CA72C8 /* HealthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthService.swift; sourceTree = "<group>"; };
 		096AA8A82CE7FCB4000DEC17 /* WeatherModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModelTest.swift; sourceTree = "<group>"; };
 		0996E2312CD4459900AEA5DF /* ServiceLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLocator.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		096AA8AA2CE8010D000DEC17 /* Mocks */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Mocks; sourceTree = "<group>"; };
+		09DA769F2CF132F8004D82E1 /* Shaders */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shaders; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,9 +138,11 @@
 		09E0E4A52CCEE77A000E48BD /* Earth */ = {
 			isa = PBXGroup;
 			children = (
+				09DA769F2CF132F8004D82E1 /* Shaders */,
 				09E0E4A62CCEE795000E48BD /* EarthView.swift */,
 				09F3BB0B2CD03FA000344FC8 /* EarthScene.swift */,
 				09F3BB0D2CD03FC500344FC8 /* Assets.swift */,
+				0925F73B2CFE915000F51187 /* MapData.swift */,
 			);
 			path = Earth;
 			sourceTree = "<group>";
@@ -219,6 +224,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				09DA769F2CF132F8004D82E1 /* Shaders */,
+			);
 			name = usefulWeather;
 			productName = usefulWeather;
 			productReference = 09FE3DB12CCED66600007927 /* usefulWeather.app */;
@@ -271,7 +279,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					09FE3DB02CCED66600007927 = {
 						CreatedOnToolsVersion = 15.4;
@@ -346,6 +354,7 @@
 				095409DE2CE2C6B900CA72C8 /* HealthService.swift in Sources */,
 				09FE3DB52CCED66600007927 /* UsefulWeatherApp.swift in Sources */,
 				09EA78F62CD1AADB00036172 /* DecoderService.swift in Sources */,
+				0925F73C2CFE915000F51187 /* MapData.swift in Sources */,
 				09AD4CEA2CDD7AC300D3BC2F /* WeatherInformationView.swift in Sources */,
 				09EA78F22CD1A9C800036172 /* NetworkCommons.swift in Sources */,
 				0996E2322CD4459900AEA5DF /* ServiceLocator.swift in Sources */,
@@ -423,6 +432,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -484,6 +494,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -512,6 +523,7 @@
 				CODE_SIGN_ENTITLEMENTS = usefulWeather/usefulWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"usefulWeather/Preview Content\"";
 				DEVELOPMENT_TEAM = G8P85U8XP2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -527,11 +539,11 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -555,6 +567,7 @@
 				CODE_SIGN_ENTITLEMENTS = usefulWeather/usefulWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"usefulWeather/Preview Content\"";
 				DEVELOPMENT_TEAM = G8P85U8XP2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -570,11 +583,11 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -595,6 +608,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = G8P85U8XP2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
@@ -617,6 +631,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = G8P85U8XP2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
@@ -638,6 +653,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = G8P85U8XP2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
@@ -659,6 +675,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = G8P85U8XP2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;

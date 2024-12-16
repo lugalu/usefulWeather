@@ -14,6 +14,13 @@ struct UsefulWeatherApp: App {
         healthService: HealthService()
     )
     
+    init() {
+        #if os(iOS)
+            UITabBar.appearance().isTranslucent = false
+            UITabBar.appearance().backgroundColor = .systemBackground
+        #endif
+    }
+    
 
     var body: some Scene {
         WindowGroup {
@@ -40,7 +47,6 @@ struct UsefulWeatherApp: App {
                 
                 EarthView()
                     .tabItem { Label("3D View", systemImage: "globe") }
-                
                 
             }
             #endif
