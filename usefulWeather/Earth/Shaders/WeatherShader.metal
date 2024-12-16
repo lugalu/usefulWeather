@@ -55,7 +55,7 @@ float3 noiseSmooth(float2 uv) {
     return float3(mix(top, bottom, newUV.y));
 }
 
-float4 calculateCloudsColor(float2 uv,float4 cloudsColor) {
+float4 smoothColor(float2 uv,float4 cloudsColor) {
     float alpha = (cloudsColor.r == 1 & cloudsColor.g == 1 && cloudsColor.b == 1) ? 1 : cloudsColor.a;
     
     float3 col = noiseSmooth(uv * 4.);
@@ -124,7 +124,7 @@ fragment float4 cloudsShader(VertexInput in [[stage_in]],
     
     float4 cloudsColor = cloudMap.sample(textureSampler, uv);
     if (cloudsColor.a > 0.2) {
-        result =  calculateCloudsColor(uv, cloudsColor);
+        result =  smoothColor(uv, cloudsColor);
     }
     
     result.rgb = blur(textureSampler, cloudMap, uv,  result) * 2;
@@ -149,7 +149,7 @@ fragment float4 rainShader(VertexInput in [[stage_in]], texture2d<float, access:
 
     float4 rainColor = rainMap.sample(textureSampler, uv);
     if (rainColor.a > 0) {
-        result = calculateCloudsColor(uv, rainColor);
+        result = smoothColor(uv, rainColor);
     }
 
     result.rgb = blur(textureSampler, rainMap, uv,  result, 6) * 10;
