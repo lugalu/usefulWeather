@@ -112,7 +112,7 @@ class MapData {
     }
     
     func getRainMap() -> UIImage? {
-        guard let cloudMap else { return nil }
+        guard let rainMap else { return nil }
         return resize(dataToMap(rainMap))
     }
     #endif

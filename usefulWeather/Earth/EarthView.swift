@@ -7,14 +7,22 @@ class EarthModel: ObservableObject, Observable{
     
 }
 
+enum WeatherVisuals: String, CaseIterable, Identifiable {
+    case clouds = "cloud.fill"
+    case rain = "cloud.rain.fill"
+    case temperature = "thermometer.low"
+    case noSelection = "eye.slash"
+    
+    var id: Self { self }
+}
+
 struct EarthView: View {
     @EnvironmentObject var locator: ServiceLocator
     let scene = EarthScene()
     @State var angle: Angle = .degrees(0)
     @State var isShowingAlert = false
-    @ObservedObject var test = Test.Shared
-    
-
+    @State var didInject = false
+    @State var selectedVisual: WeatherVisuals = .clouds
     
     var body: some View {
         ZStack{
@@ -25,18 +33,13 @@ struct EarthView: View {
                 delegate: scene
             )
             .onAppear{
-                scene.injectLocator(locator)
+                if !didInject {
+                    scene.injectLocator(locator)
+                    didInject.toggle()
+                }
             }
             
-
-            
             helpAndClockView()
-            
-//            if let t = test.t {
-//                Image(nsImage: t)
-//                    .resizable()
-//                    .scaledToFit()
-//            }
         }
         .alert("Information", isPresented: $isShowingAlert){} message: {
             Text("The Time of day displayed here does not reflect on the weather, is purely cosmetic and based on real world data from many satellites including NASA, natural earth, open weather, and more.")
@@ -47,7 +50,17 @@ struct EarthView: View {
     fileprivate func helpAndClockView() -> some View {
         return VStack {
             HStack {
-                Spacer()
+                
+                Picker("",selection: $selectedVisual){
+                    ForEach(WeatherVisuals.allCases) { visual in
+                        Image(systemName: visual.rawValue)
+                            .font(.title)
+
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                
                 Button(action: {
                     isShowingAlert.toggle()
                 }) {
@@ -68,9 +81,22 @@ struct EarthView: View {
                 .frame(width: Assets.clockSize, height: Assets.clockSize, alignment: .center)
                 .rotationEffect(angle, anchor: .center)
                 .gesture(dragGesture())
+                .sensoryFeedback(.impact(weight: .heavy, intensity: 1), trigger: (0..<1).contains(angle.degrees.truncatingRemainder(dividingBy: 90)))
                 .offset(y: Assets.clockOffset)
         }
         .padding(.top, 8)
+        .onChange(of: selectedVisual){
+            switch selectedVisual {
+            case .noSelection:
+                scene.hideWeather()
+            case .clouds:
+                scene.changeToCloudShader()
+            case .rain:
+                scene.changeToRainShader()
+            case .temperature:
+                scene.changeToTemperatureShader()
+            }
+        }
     }
     
     func dragGesture() -> some Gesture {

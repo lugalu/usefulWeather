@@ -88,45 +88,71 @@ float2 mercatorToEquirectangular(float2 uv) {
     return float2(x,y);
 }
 
-/*
- void reSample(in int d, in vec2 uv, inout vec4 fragColor)
- {
-  
-     vec2 step1 = (vec2(d) + 0.5) / iResolution.xy;
-     
-     fragColor += texture(iChannel0, uv + step1) / float(4);
-     fragColor += texture(iChannel0,  uv - step1) / float(4);
-       vec2 step2 = step1;
-     step2.x = -step2.x;
-     fragColor += texture(iChannel0, uv + step2) / float(4);
-     fragColor += texture(iChannel0,  uv - step2) / float(4);
- }
- */
 
+float3 blur(sampler textureSampler, texture2d<float, access::sample> texture, float2 uv,float4 col, float kernelSize = 8) {
+    const float PI = M_PI_F * 2;
+    const float2 resolution = float2(2046, 1024);
 
-float4 blur(sampler textureSampler, texture2d<float, access::sample> texture, float2 uv,float4 col) {
-    float2 resolution = float2(2048, 1024);
+    float direction = 16;
+    float quality = 3;
+    float2 kernelRadius = kernelSize / resolution;
     
-    float blur = uv.x / resolution.x * 7;
+    float3 accumulate = col.rgb;
     
-    return col;
+    for( float d = 0; d < PI; d += PI / direction) {
+        for(float i = 1 / quality; i < 1.01; i += 1.0 / quality) {
+            
+            float2 newUV = float2(cos(d), sin(d));
+            newUV *= kernelRadius;
+            newUV *= i;
+            newUV += uv;
+            accumulate += texture.sample(textureSampler, newUV).rgb;
+        }
+    }
+
+    accumulate /= quality * direction + 1;
+    
+    return accumulate;
 }
 
 fragment float4 cloudsShader(VertexInput in [[stage_in]],
-                             texture2d<float, access::sample> cloudMap,
-                             texture2d<float, access::sample> rainMap,
-                             texture2d<float, access::sample> temperatureMap
-                 ){
+                             texture2d<float, access::sample> cloudMap ){
     constexpr sampler textureSampler;
     float2 uv = mercatorToEquirectangular(in.uv);
     
     float4 result = float4(0);
     
     float4 cloudsColor = cloudMap.sample(textureSampler, uv);
-    if (cloudsColor.a > 0) {
+    if (cloudsColor.a > 0.2) {
         result =  calculateCloudsColor(uv, cloudsColor);
     }
     
+    result.rgb = blur(textureSampler, cloudMap, uv,  result) * 2;
+
+    return result;
+}
+
+fragment float4 temperatureShader(VertexInput in [[stage_in]], texture2d<float, access::sample> temperatureMap ){
+    constexpr sampler textureSampler;
+    float2 uv = mercatorToEquirectangular(in.uv);
+    
+    float4 result = temperatureMap.sample(textureSampler, uv);
+    return result;
+}
+
+fragment float4 rainShader(VertexInput in [[stage_in]], texture2d<float, access::sample> rainMap ){
+    constexpr sampler textureSampler;
+    float2 uv = mercatorToEquirectangular(in.uv);
+    
+    float4 result = float4(0);
+    
+
+    float4 rainColor = rainMap.sample(textureSampler, uv);
+    if (rainColor.a > 0) {
+        result = calculateCloudsColor(uv, rainColor);
+    }
+
+    result.rgb = blur(textureSampler, rainMap, uv,  result, 6) * 10;
 
     return result;
 }

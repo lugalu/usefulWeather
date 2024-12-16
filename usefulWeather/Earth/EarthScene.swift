@@ -207,9 +207,28 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
         return [
             "temperatureMap": temperature,
             "cloudMap": cloud,
-            "rain": rain
+            "rainMap": rain
         ]
         
+    }
+    
+    func changeToCloudShader() {
+        weatherNode?.isHidden = false
+        weatherNode?.geometry?.materials.first?.program?.fragmentFunctionName = "cloudsShader"
+    }
+    
+    func changeToTemperatureShader() {
+        weatherNode?.isHidden = false
+        weatherNode?.geometry?.materials.first?.program?.fragmentFunctionName = "temperatureShader"
+    }
+    
+    func changeToRainShader() {
+        weatherNode?.isHidden = false
+        weatherNode?.geometry?.materials.first?.program?.fragmentFunctionName = "rainShader"
+    }
+    
+    func hideWeather() {
+        weatherNode?.isHidden = true
     }
     
 }
