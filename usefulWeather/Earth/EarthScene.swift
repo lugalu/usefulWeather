@@ -8,16 +8,6 @@ fileprivate struct CustomData {
     var lightDirection: simd_float3 = simd_float3(0.436436, -0.2, 0.218218)
 }
 
-
-class Test: ObservableObject {
-    static let Shared = Test()
-    
-    @Published var t: Data? = nil
-    
-    
-}
-
-//TODO: missing geometry for weather,
 class EarthScene: SCNScene, SCNSceneRendererDelegate {
     
     private var planetNode: SCNNode?
@@ -180,12 +170,6 @@ class EarthScene: SCNScene, SCNSceneRendererDelegate {
         let weatherNode = SCNNode(geometry: weatherGeometry)
         self.rootNode.addChildNode(weatherNode)
         self.weatherNode = weatherNode
-        
-//        Task {@MainActor in
-//            Test.Shared.t = mapData.getCloudMap()
-//            
-//        }
-
     }
     
     private func makeWeatherMaterialsDict(_ mapData: MapData) -> [String: Any]{
