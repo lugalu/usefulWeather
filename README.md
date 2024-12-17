@@ -2,7 +2,7 @@
 
 This is a Proof of Concept (PoC) app focused on making a more useful and fun weather app, utilizing the [OpenWeatherAPI](https://openweathermap.org/api)  to not only show current data but also calculate and recommend clothing, display a world view of the weather, and feature a night & day cycle. This app is compatible with macOS and iOS. **As a PoC, this isn't production-ready.**
 
-<img src= "https://imgur.com/PD97gCv"/>
+<img src= "https://imgur.com/PD97gCv.png"/>
 
 ## Features
 - Clo index calculation (insulation level)
